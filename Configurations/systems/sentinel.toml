@@ -1,0 +1,33 @@
+[tide]
+#enabled = false
+
+[setup]
+#resource_group = ""
+#workspace =  ""
+#azure_tenant_id = "$AZURE_TENANT_ID"
+#azure_subscription_id = "$AZURE_SUBSCRIPTION_ID"
+#proxy = false
+
+[secrets]
+#azure_client_id = "$AZURE_CLIENT_ID"
+#azure_client_secret = "$AZURE_CLIENT_SECRET"
+
+[lookups]
+#enabled = false
+
+[defaults]
+# Those defaults are the minimum required to deploy
+# the MDR, and are kept as a safety net
+#response.alert_severity = "Medium"
+#scheduling.frequency = "1h"
+#scheduling.lookback = "1h"
+#trigger = "GreaterThan"
+#threshold = 0
+#alert.create_incident = true
+#grouping.alert.enabled = false
+#grouping.alert.reopen_closed_incidents = false
+#grouping.alert.grouping_lookback = "1h"
+#grouping.alert.matching = "AllEntities"
+#grouping.event = "SingleAlert"
+#suppression = "1h"
+#suppression_enabled = false

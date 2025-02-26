@@ -1,0 +1,10 @@
+[cve]
+#default_db_link = "https://nvd.nist.gov/vuln/detail/"
+#retrieve_details = true
+#proxy = false
+
+[wiki]
+# Custom wiki link to the generated documentation.
+# If generating a Gitlab Wiki, the URL is automatically
+# computed from CI Variables
+#wiki_link = ""

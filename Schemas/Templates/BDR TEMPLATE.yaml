@@ -1,0 +1,31 @@
+id: BDR0000
+name: 
+criticality: 
+#references:
+  #public:
+    #1: 
+  #internal:
+    #a: 
+  #reports:
+    #-
+metadata:
+  version: 
+  created: YYYY-MM-DD
+  modified: YYYY-MM-DD
+  tlp: 
+  author: author@domain.com
+  #contributors:
+    #-
+
+request:
+  domains:
+    - 
+  #targets:
+    #-
+  #platforms:
+    #-
+  violation: 
+  justification: |
+    Type Here
+  description: |
+    Type Here

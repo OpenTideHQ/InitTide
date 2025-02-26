@@ -1,5 +1,4 @@
-# StartTide
-
+# InitTide
 
 
 ## Getting started

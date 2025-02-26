@@ -1,0 +1,49 @@
+id: TVM0000
+name: 
+criticality: 
+#references:
+  #public:
+    #1: 
+  #internal:
+    #a: 
+  #reports:
+    #-
+
+metadata:
+  version: 
+  created: YYYY-MM-DD
+  modified: YYYY-MM-DD
+  tlp: 
+  author: author@domain.com
+  #contributors:
+    #-
+
+threat:
+  #actors:
+    #-
+  #killchain: 
+  att&ck:
+    - 
+  #chaining:
+    #- relation: 
+      #vector: 
+      #description: |
+        #Type Here
+  #cve:
+    #-
+  domains:
+    - 
+  terrain: |
+    Type Here
+  targets:
+    - 
+  platforms:
+    - 
+  severity: 
+  leverage:
+    - 
+  impact:
+    - 
+  viability: 
+  description: |
+    Type Here

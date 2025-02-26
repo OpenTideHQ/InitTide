@@ -1,0 +1,43 @@
+{
+  "yaml.schemas": {
+    "Schemas/TVM Schema.json": [
+      "**/Threat*Vector*Models/*.yaml"
+    ],
+    "Schemas/TAM Schema.json": [
+      "**/Threat*Actor*Models/*.yaml"
+    ],
+    "Schemas/CDM Schema.json": [
+      "**/Cyber*Detection*Models/*.yaml"
+    ],
+    "Schemas/MDR Schema.json": [
+      "**/Managed*Detection*Rules/*.yaml"
+    ],
+    "Schemas/BDR Schema.json": [
+      "**/Business*Detection*Requests/*.yaml"
+    ],
+    "Schemas/Lookup Metadata Schema.json": [
+      "**/Lookups/**/*.metadata.yaml"
+    ],
+  },
+
+  "editor.suggest.showSnippets": false,
+  "python.terminal.executeInFileDir" : true,
+
+  "markdown.preview.openMarkdownLinks": "inPreview",
+
+  "workbench.editorAssociations": {
+    "*.csv": "gc-excelviewer-csv-editor",
+    "*.md": "vscode.markdown.preview.editor"
+  },
+  "csv-preview.lineNumbers": "ordinal",
+  "csv-preview.capitalizeHeaders": false,
+
+  "git.autofetch": true,
+  "git.autofetchPeriod": 30,
+  "git.autorefresh": true,
+  "git.autoStash": true,
+  "git.pruneOnFetch": true,
+  "git.showPushSuccessNotification": true,
+  "python.analysis.typeCheckingMode": "basic",
+
+}

@@ -1,0 +1,47 @@
+{
+    "tam": {
+        "metadata": {
+            "field": "tam",
+            "icon": "\ud83d\udc7a",
+            "name": "Threat Actors",
+            "description": "Threat Actors"
+        },
+        "entries": {}
+    },
+    "tvm": {
+        "metadata": {
+            "field": "tvm",
+            "icon": "\u2623\ufe0f",
+            "name": "Threat Vectors",
+            "description": "Threat Vectors"
+        },
+        "entries": {}
+    },
+    "cdm": {
+        "metadata": {
+            "field": "cdm",
+            "icon": "\ud83d\udee1\ufe0f",
+            "name": "Detection Models",
+            "description": "Detection Models"
+        },
+        "entries": {}
+    },
+    "bdr": {
+        "metadata": {
+            "field": "bdr",
+            "icon": "\ud83c\udfdb\ufe0f",
+            "name": "Business Requests",
+            "description": "Business Requests"
+        },
+        "entries": {}
+    },
+    "mdr": {
+        "metadata": {
+            "field": "mdr",
+            "icon": "\ud83d\udea8",
+            "name": "Detection Rules",
+            "description": "Detection Rules"
+        },
+        "entries": {}
+    }
+}

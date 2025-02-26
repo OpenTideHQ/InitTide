@@ -1,0 +1,36 @@
+id: CDM0000
+name: 
+criticality: 
+#references:
+  #public:
+    #1: 
+  #internal:
+    #a: 
+  #reports:
+    #-
+metadata:
+  version: 
+  created: YYYY-MM-DD
+  modified: YYYY-MM-DD
+  tlp: 
+  author: author@domain.com
+  #contributors:
+    #-
+
+detection:
+  vectors:
+    - 
+  #killchain: 
+  #att&ck: 
+  methods:
+    - 
+  maturity: 
+  feasibility: 
+  datasources:
+    - 
+  collection:
+    - 
+  artifacts:
+    - 
+  guidelines: 
+  tuning: 

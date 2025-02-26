@@ -1,0 +1,122 @@
+workflow:
+  name: $CI_COMMIT_TITLE
+  rules:
+    - if: $CI_COMMIT_TITLE =~ /[CoreTIDE] Framework Generation/
+      when: never
+    - if: $CI_COMMIT_TITLE =~ /[CoreTIDE] MDR Status Promotion/
+      when: never
+    - if: $CI_COMMIT_TITLE =~ /[CoreTIDE] Objects Mutation/
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_PIPELINE_SOURCE == "web"
+      when: always
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+# CoreTIDE is by default fetched dynamically from the public repository
+# https://code.europa.eu/ec-digit-s2/opentide/coretide. Ensure that your runner
+# can access this url if you want to always fetch the latest public version. 
+#
+# Optionally, you may also clone coretide in your instance, and point your
+# TIDE Instance to fetch your local coretide instead. This may be useful for
+# in airgap environments, to develop contributions to the project,
+# or to build organization-specific customization built on top of CoreTIDE.
+#
+# If you chose the local option, we recomment to look into Repository Push Mirroring
+# (https://docs.gitlab.com/ee/user/project/repository/mirror/push.html) which allows your
+# local instance to remain up-to-date automatically with the public instance, but 
+# risking conflicts or divergence if you push on the downstream core branch.
+# When developing internal versions, do commit on the core branch, but instead
+# a local development branch and use the include statement in this file to point to the right ref.
+# This way, you can still retrieve updates from upstream and cherry-pick or merge from core
+# into your custom branch without introducing breaks.
+#
+# Review the settings in this page to edit CoreTIDE settings relevant to local repos.
+  
+
+variables:
+  TIDE_REPO_ACCESS: git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
+  TIDE_WIKI_ACCESS: git@$CI_SERVER_HOST:$CI_PROJECT_PATH.wiki.git
+  # Edit this variable to change where CoreTIDE can be found
+  TIDE_CORE_REPO: coretide
+  TIDE_CORE_SETUP: REMOTE # Set to LOCAL if you wish to clone CoreTIDE in your local gitlab instance
+                          # When set to remote, will fetch pipelines from the code.europa.eu location,
+                          # and inject this repository during pipelines. REMOTE is the default strategy
+                          # if you can allow network from your instance to code.europa.eu, and don't
+                          # need to develop custom features over CoreTIDE. 
+  TIDE_WIKI: $CI_PROJECT_NAME.wiki
+  TIDE_WIKI_GENERATION: "GITLAB_WIKI" # Only supported option, set to DISABLED to prevent
+  TIDE_DEPLOYMENT: "ENABLED" # Set to DISABLED to prevent any deployment
+  DOCUMENTATION_TYPE: GLFM
+  GIT_DEPTH: 150
+
+rules:
+  - if: $TIDE_CORE_SETUP == "REMOTE"
+    variables:
+      TIDE_CORE_ACCESS: git@code.europa.eu:ec-digit-s2/opentide/coretide.git
+  - if: $TIDE_CORE_SETUP == "LOCAL"
+    variables:
+      TIDE_CORE_ACCESS: git@$CI_SERVER_HOST:$CI_PROJECT_NAMESPACE/$TIDE_CORE_REPO.git
+
+# For the maximum compatibility in build environments, we privilege SSH
+# over HTTPS in most cases. The SSH key will also be used to prove
+# commits, proving they were made automatically from a trusted key.
+#
+# Two variables must be set in CI Variables: 
+#   - TIDE_RUNNER_SSH_PRIVATE_KEY
+#   - TIDE_RUNNER_SSH_PUBLIC_KEY
+#
+# This key-pair should be generated as any SSH key generation with ssh-keygen
+# There is then two options to authorize those keys against the project 
+#
+# - Add the private key to Repository > Deploy Token 
+#   - If you also cloned/mirrored a local CoreTIDE repo on your instance,
+#     you will need to add the private key in the local CoreTIDE Project settings as well. 
+# - Create a new programmatic user, authorize that user on the project,
+#   and add the private key previously generated to the user Preferences > SSH Keys
+#   - Also authorize the user on the local CoreTIDE repo if you use one.
+
+default:
+  before_script:
+    # Start SSH Agent
+    #- printenv
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    # Add Runner Key to Agent Store
+    - chmod 400 "$TIDE_RUNNER_SSH_PRIVATE_KEY"
+    - ssh-add "$TIDE_RUNNER_SSH_PRIVATE_KEY"
+    # Add Gitlab Instance to Known Hosts
+    - ssh-keyscan $CI_SERVER_HOST >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    # Configure Basic Commit User Information
+    - git config --global user.email "$TIDE_RUNNER_COMMITER_EMAIL"
+    - git config --global user.name "$TIDE_RUNNER_COMMITER_NAME"
+    # Delete  rebase merge directory if exists to avoid conflicts
+    - rm -fr ".git/rebase-merge"
+    # Configure Commit Signing
+    - git config --global gpg.format ssh
+    - git config --global user.signingkey $TIDE_RUNNER_SSH_PUBLIC_KEY
+    - git config --global commit.gpgsign true
+    - git clone $TIDE_CORE_ACCESS #Inject CoreTIDE in the environment
+    - cd $TIDE_CORE_REPO 
+    - git pull origin
+    - cd ../ #Back in Tide Repo
+    
+
+# ========================FETCH STRATEGY======================
+# The nesting behaviour is controlled by $TIDE_CORE_SETUP, 
+# which must be set under the `variables` section 
+# == Public CoreTIDE Setup
+# Fetches the pipelines from the latest version of the repository 
+#
+# == Local CoreTIDE Setup
+# Imports pipeline remotely from CoreTIDE at core.europa.eu, using a sequence
+# of raw nested imports
+include:
+  - remote: 'https://code.europa.eu/ec-digit-s2/opentide/coretide/-/raw/core/Pipelines/Gitlab/tide_remote.yml'
+    rules:
+      - if: $TIDE_CORE_SETUP == "REMOTE"
+  - project: 'group/coretide' #Add the group or path where coretide is located
+    ref: core # Or another branch if you have set it up
+    file: '/Pipelines/Gitlab/tide.yml' #Do not modify
+    rules:
+      - if: $TIDE_CORE_SETUP == "LOCAL"

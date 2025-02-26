@@ -1,0 +1,236 @@
+{
+    "title": "Lookup Metadata Meta Schema",
+    "description": "Specification for Lookup Metadata companion file",
+    "filename": "Lookup_Name.csv",
+    "modeldoc": "Lookup Metadata are accompanying files that help documenting and validating their lookups",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "required": [
+        "name",
+        "tlp",
+        "description",
+        "owners"
+    ],
+    "properties": {
+        "name": {
+            "title": "\ud83c\udfab Display name",
+            "type": "string",
+            "description": "Verbose Name of the lookup, where the file name may be more technical",
+            "example": "Legitimate domain admins"
+        },
+        "tlp": {
+            "title": "\ud83d\udea6 Traffic Light Protocol",
+            "type": "string",
+            "description": "The Traffic Light Protocol - or short: TLP - was designed with the objective to create a favorable classification scheme for sharing sensitive information while keeping the control over its distribution at the same time.",
+            "example": "green",
+            "enum": [
+                "clear",
+                "green",
+                "amber",
+                "amber+strict",
+                "red"
+            ],
+            "markdownEnumDescriptions": [
+                "\n### \u26aa clear\n\n\ud83d\udd11 **Identifier** : `TLP:CLEAR`\n\n \n\n\n\n\n\n\n\n---\n\nRecipients can spread this to the world, there is no limit on disclosure.\n",
+                "\n### \ud83d\udfe2 green\n\n\ud83d\udd11 **Identifier** : `TLP:GREEN`\n\n \n\n\n\n\n\n\n\n---\n\nLimited disclosure, recipients can spread this within their community. Sources may use TLP:GREEN when information is useful to increase awareness within their wider community.\n",
+                "\n### \ud83d\udfe0 amber\n\n\ud83d\udd11 **Identifier** : `TLP:AMBER`\n\n \n\n\n\n\n\n\n\n---\n\nLimited disclosure, recipients can only spread this on a need-to-know basis within their organization and its clients.\n",
+                "\n### \ud83d\udfe0 amber+strict\n\n\ud83d\udd11 **Identifier** : `TLP:AMBER+STRICT`\n\n \n\n\n\n\n\n\n\n---\n\nSimilar to TLP:AMBER, but restricts sharing to the organization only.\n",
+                "\n### \ud83d\udd34 red\n\n\ud83d\udd11 **Identifier** : `TLP:RED`\n\n \n\n\n\n\n\n\n\n---\n\nFor the eyes and ears of individual recipients only, no further disclosure.\n"
+            ]
+        },
+        "description": {
+            "title": "\ud83d\udd2c Lookup Description",
+            "type": "string",
+            "description": "Describe lookup purpose and context"
+        },
+        "owners": {
+            "title": "Lookup Owners",
+            "type": "array",
+            "description": "Key point of contacts maintaining the lookup file",
+            "items": {
+                "type": "string",
+                "format": "email"
+            }
+        },
+        "sentinel": {
+            "title": "Sentinel Watchlist Configuration",
+            "description": "Additional Sentinel Specific Settings",
+            "type": "object",
+            "required": [
+                "search_key",
+                "watchlist_alias"
+            ],
+            "properties": {
+                "search_key": {
+                    "title": "\ud83d\udddd\ufe0f Watchlist Search Key",
+                    "markdownDescription": "Name of a column in your watchlist that you expect to use as a join with\nother data or as a frequent object of searches.\n\n---\n\n**Updating an existing watchlist search key**\n\n\ud83d\udca1 Ensure readiness of existing queries before updating as they use the search key as a reference. \n\n\u26a0\ufe0f Changing the search key will result in a deletion and recreation of the watchlist\nin a synchroneous manner leaving a small period of time where the lookup won't be complete. \n",
+                    "type": "string",
+                    "icon": "\ud83d\udddd\ufe0f"
+                },
+                "watchlist_alias": {
+                    "title": "Watchlist Alias",
+                    "markdownDescription": "Aliases can be used as a more friendly name to consume the watchlist in queries.\nBy default, the aliases and the watchlist name are the same as the lookup csv file name.\n\n\ud83d\udcac 3 to 64 characters long : \n\n- First character must be a letter\n- Last character can be a letter or a number\n- Other characters can be letters, numbers, underscores `_` or hyphens `-`\n\n---\n\n**Updating an existing watchlist alias**\n\n\ud83d\udca1 Ensure readiness of existing queries before updating as they use the alias as a reference. \n\n\u26a1 When updating the alias of a watchlist, the deployer will only delete the previous\nwatchlist once the new one with the updated alias was created, leaving no gaps.\n",
+                    "type": "string",
+                    "pattern": "^[a-zA-Z]{1}[a-zA-Z0-9_-]{1,62}[a-zA-Z0-9]{1}$"
+                }
+            },
+            "additionalProperties": false
+        },
+        "columns": {
+            "title": "\ud83e\uddee Column Setup",
+            "description": "Metadata around columns and their expected content.",
+            "icon": "\ud83e\uddee",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "type",
+                    "description",
+                    "nullable"
+                ],
+                "allOf": [
+                    {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "regex"
+                                }
+                            }
+                        },
+                        "then": {
+                            "required": [
+                                "regex.expression"
+                            ]
+                        }
+                    },
+                    {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "list"
+                                }
+                            }
+                        },
+                        "then": {
+                            "required": [
+                                "list.values"
+                            ]
+                        }
+                    }
+                ],
+                "properties": {
+                    "name": {
+                        "title": "\ud83c\udfab Column Name",
+                        "type": "string"
+                    },
+                    "regex.expression": {
+                        "description": "Regular Expression used when validating the column",
+                        "type": "string"
+                    },
+                    "list.values": {
+                        "description": "Defined list of values that the values in the lookup column must match.\n",
+                        "type": "array"
+                    },
+                    "type": {
+                        "title": "Data Type",
+                        "description": "Describe the expected data format of the column",
+                        "type": "string",
+                        "anyOf": [
+                            {
+                                "const": "any",
+                                "description": "Generic validation, everything will pass.",
+                                "markdownDescription": "### \ud83e\udd37\u200d\u2642\ufe0f Any type\n\nGeneric validation, everything will pass.\n\n\u26a0\ufe0f _This type is not recommended as it bypasses validation, and should only be used\nin exceptional scenario where other types won't apply._\n\n\ud83d\udca1 Use the `regex` type if you require a custom validation type or contact CoreTIDE Governance.\n"
+                            },
+                            {
+                                "const": "string",
+                                "description": "Will explicitely check for string, and reject other format that can be converted to a string.",
+                                "markdownDescription": "### \ud83e\uddf5 Strings\n\nWill check for `strings`, and reject other format that\ncan be converted to a `integer`, `float` or `boolean`.\n\n**\u2705 Accepted Values**\n- NameSurname\n- Name Surname\n- Word 19 Word 1.234\n\n**\u274c Rejected Values**\n- 10,230\n- 11\n- 1.1\n- TRUE _Accepted boolean True value, use boolean type instead_\n"
+                            },
+                            {
+                                "const": "integer",
+                                "description": "Expects an integer with no separators such as \",\" or \".\" (12,000,000 is not accepted, use 12000000).\nFor values with a decimal point, use the float type\n",
+                                "markdownDescription": "### \ud83d\udd22 Integers\n\nAccepts an integer (whole number). \ud83d\udca1For numbers with a decimal point, use the _float_ type.\n\n\u26a0\ufe0f **Thousands separators are not accepted**\n\n\u26a0\ufe0f .0 decimal points are tolerated, as many tools will treat it as an integer. \n\n- \u274c `19,000,000` is invalid, `19000000` is expected\n- \u2705 `1.00` is a float, but is tolerated\n- \u2705 `19` is a valid integer\n"
+                            },
+                            {
+                                "const": "float",
+                                "description": "Expects a number with a floating point OR an integer.\nIf only expecting integer, use the integer type instead.\n",
+                                "markdownDescription": "### \ud83d\udedf Floating point values\n\nExpects a number with a floating point OR an integer.\n\n\ud83d\udca1If only expecting integer, use the _integer_ type instead.\n\n\u26a0\ufe0f **Thousands separators are not accepted**\n\n\u26a0\ufe0f `.` is expected as a decimal separator, not `,`\n\n- \u274c `19,000.1` is invalid, `19000.1` is expected\n- \u274c `19,6` is invalid, `19.6` is expected\n- \u2705 `19` is an integer, and also a valid float\n- \u2705 `19.01` is a valid float\n"
+                            },
+                            {
+                                "const": "boolean",
+                                "description": "Accepts a value representing a [true | True | TRUE | 1] or [false | False | FALSE | 0] state.",
+                                "markdownDescription": "### \u2705 Boolean Values \nAccepts a value represented a true or false state. \n\n| **\u2705 Accepted \"True\" Values** | **\u274c Accepted \"False\" Values** |\n|-------------------------------|---------------------------------|\n| true                          | false                           |\n| True                          | False                           |\n| TRUE                          | FALSE                           |\n| 1                             | 0                               | \n"
+                            },
+                            {
+                                "const": "regex",
+                                "description": "Custom regex validation",
+                                "markdownDescription": "### \ud83d\udd0e Regular Expression\n\nLeverage a regular expression to provide a custom validation.\n\n\ud83d\udca1 It is strongly suggested to test your regex on a playground such as\n[\ud83d\udd17Regex 101](https://regex101.com) and toggle the `Python` Flavor for maximum compatibility.\n\n\ud83d\udc49 You will have to enter the regex using the required `regex.expression` keyword\n\n\u26a0\ufe0f CoreTIDE does not vet for any third party site to test regular expression,\nwe recommend to **not upload any critical data on a third-party controlled site**.\n"
+                            },
+                            {
+                                "const": "list",
+                                "description": "Check whether the input value belongs to a predefined list",
+                                "markdownDescription": "### \ud83d\udcc3 Predefined List\n\n\ud83d\udc49 You will have to input the required value with `list.values`\n\n\u26a0\ufe0f Leading and trailing whitespaces will be ignored during validation, as the overall data pipeline\nwill remove them as well\n"
+                            },
+                            {
+                                "const": "email",
+                                "description": "Standard email format, such as coretide@tide.com. IP addresses within the email\naddress are not expected. \n",
+                                "markdownDescription": "### \ud83d\udce7 Email Address\nStandard email format, such as described in [\ud83d\udd17 RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322)\n\n- \u2705 coretide@tide.com\n- \u2705 tide.governance@tide.babel\n- \u274c coretide@10.0.0.19\n                \n\ud83d\udca1 Any Top-Level Domain (`tld`) is accepted, as long as the `user@domain.tld` format is respected.\n"
+                            },
+                            {
+                                "const": "url",
+                                "description": "Standard url format, such as http://www.example.com/index.html.\nFor simple FQDN validation with no URI, use the domain type instead.\n",
+                                "markdownDescription": "### \ud83d\udd17 URL Address\nStandard URL format, such as described in [\ud83d\udd17 URL Living Standard](https://url.spec.whatwg.org/)\n\n\ud83d\udca1 For simple domain validation with no URI, use the _domain_ instead.\n\n\ud83d\udc49 Expects the standard pattern `FQDN/URI`, meaning `[ftp | http | https]://(subdomain.)domain.tld/resource`\n"
+                            },
+                            {
+                                "const": "domain",
+                                "description": "Standard domain name format, such as (subdomain.)domain@tld.\nA full FQDN (containing protocol) is not expected. \n",
+                                "markdownDescription": "### \ud83c\udf10 Domain Name\n\nStandard domain name format, such as described in [\ud83d\udd17 RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034)\n\n\ud83d\udca1A full FQDN (containing protocol) is not expected. For full `FQDN` + `URI`, use _url_ instead\n\n\ud83d\udc49 Expects the standard pattern `FQDN/URI`, meaning `[ftp | http | https]://(subdomain.)domain.tld/resource`\n"
+                            },
+                            {
+                                "const": "ip",
+                                "description": "IP version 4 format, such as 10.0.0.19",
+                                "markdownDescription": "### \ud83c\udf10 IP Address\n\nIPv4 addresses, such as described in [\ud83d\udd17 Wikipedia | IP Address](https://en.wikipedia.org/wiki/IP_address)\n\n\ud83d\udca1 For IPv6 validation, use _ip::v6_ instead.\n\n\ud83d\udc49 Expects the common 32 bit (4 bytes) decimal format `(0->253).(0->253).(0->253).(0->253)`\n"
+                            },
+                            {
+                                "const": "ip::v6",
+                                "description": "IP version 6 format, such as 2001:db8:3333:4444:5555:6666:7777:8888",
+                                "markdownDescription": "### \ud83c\udf10 IP version 6 Address\n\nIPv6 addresses, such as descripbed in [\ud83d\udd17 Wikipedia | IPv6 Address](https://en.wikipedia.org/wiki/IPv6_address)\n\n\ud83d\udc49 Accepts both upper and lower case hexadecimal values, such as\n`2001:db8:3333:4444:5555:6666:7777:8888` and `2001:db8:3333:4444:CCCC:DDDD:EEEE:FFFF`\n"
+                            },
+                            {
+                                "const": "uuid",
+                                "description": "Universal Unique Identifier as a 128 bit value",
+                                "markdownDescription": "### \ud83c\udd94 Universal Unique Identifier\n\nUUIDs such as described in [\ud83d\udd17 Wikipedia | Universal Unique Identifider](https://en.wikipedia.org/wiki/Universally_unique_identifier)\n\n\ud83d\udc49 Accepts any version of UUID, as the only difference is the generation\nmethod and not the format.\n"
+                            },
+                            {
+                                "const": "hash::md5",
+                                "description": "MD5 Hashes",
+                                "markdownDescription": "### #\ufe0f\u20e3 MD5 Hash\n\nValid MD5 Hash values, such as described in [\ud83d\udd17 Wikipedia | MD5](https://en.wikipedia.org/wiki/MD5)\n"
+                            },
+                            {
+                                "const": "hash::sha1",
+                                "description": "SHA-1 Hashes",
+                                "markdownDescription": "### #\ufe0f\u20e3 Secure Hash Algorithm 1 Hash\n\nValid SHA-1 Hash values, such as described in [\ud83d\udd17 Wikipedia | MD5](https://en.wikipedia.org/wiki/SHA-1)\n"
+                            },
+                            {
+                                "const": "hash::sha256",
+                                "description": "SHA-256 Hashes",
+                                "markdownDescription": "### #\ufe0f\u20e3 Secure Hash Algorithm 2 [256 bit digest] Hash\n\nValid SHA256 Hash values, such as described in [\ud83d\udd17 Wikipedia | SHA-2](https://en.wikipedia.org/wiki/SHA-2)\n"
+                            }
+                        ]
+                    },
+                    "nullable": {
+                        "title": "If true, the value is allowed to be empty. If False, must always be filled in.",
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "description": {
+                        "title": "\ud83d\udd2c Column Description",
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    }
+}

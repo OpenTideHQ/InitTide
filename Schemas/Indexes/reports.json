@@ -1,0 +1,12 @@
+{
+    "reports": {
+        "metadata": {
+            "field": "reports",
+            "icon": "\ud83d\udcf0",
+            "name": "Intelligence Reports",
+            "model": true,
+            "description": "Registry of reports uploaded to this CoreTIDE instance"
+        },
+        "entries": {}
+    }
+}

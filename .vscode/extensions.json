@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "redhat.vscode-yaml",
+        "ms-python.python",
+        "gitlab.gitlab-workflow",
+        "motivesoft.vscode-uuid-generator",
+        "grapecity.gc-excelviewer"
+    ]
+}

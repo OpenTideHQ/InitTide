@@ -1,0 +1,29 @@
+name: 
+uuid: 
+#references:
+  #public:
+    #1: 
+  #internal:
+    #a: 
+  #reports:
+    #-
+
+#metadata:
+  version: 
+  created: YYYY-MM-DD
+  modified: YYYY-MM-DD
+  tlp: 
+  author: author@domain.com
+  #contributors:
+    #-
+
+description: |
+  Type Here
+#detection_model: 
+
+response:
+  alert_severity: 
+  #playbook: https://
+  #responders: 
+
+configurations: {}
