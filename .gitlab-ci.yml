@@ -52,7 +52,7 @@ variables:
 rules:
   - if: $TIDE_CORE_SETUP == "REMOTE"
     variables:
-      TIDE_CORE_ACCESS: git@code.europa.eu:ec-digit-s2/opentide/coretide.git
+      TIDE_CORE_ACCESS: git@github.com:OpenTideHQ/CoreTide.git
   - if: $TIDE_CORE_SETUP == "LOCAL"
     variables:
       TIDE_CORE_ACCESS: git@$CI_SERVER_HOST:$CI_PROJECT_NAMESPACE/$TIDE_CORE_REPO.git
