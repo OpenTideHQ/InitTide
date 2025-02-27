@@ -112,7 +112,7 @@ default:
 # Imports pipeline remotely from CoreTIDE at core.europa.eu, using a sequence
 # of raw nested imports
 include:
-  - remote: 'https://code.europa.eu/ec-digit-s2/opentide/coretide/-/raw/core/Pipelines/Gitlab/tide_remote.yml'
+  - remote: 'https://raw.githubusercontent.com/OpenTideHQ/CoreTide/refs/heads/development/Pipelines/Gitlab/tide_remote.yml'
     rules:
       - if: $TIDE_CORE_SETUP == "REMOTE"
   - project: 'group/coretide' #Add the group or path where coretide is located
