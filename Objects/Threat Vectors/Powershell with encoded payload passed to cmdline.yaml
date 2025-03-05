@@ -72,27 +72,36 @@ threat:
 
     1. Create a command as a string. 
     
+    ```
     $command = 'dir "C:\Program Files"'
-
+    ```
+    
     2. Convert the command to Base64:
 
+    ```pwsh
     $bytes = [System.Text.Encoding]::Unicode.GetBytes($command)
     $encodedCommand = [Convert]::ToBase64String($bytes)
+    ```
 
     Now you can run the encoded command using powershell.exe:
 
+    ```
     powershell.exe -encodedCommand $encodedCommand
-
+    ```
+    
     It's also possible to encode domain names, for example: 
 
     Powershell input:
 
+    ```pwsh
     [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes("'sample_domain.com'"))
+    ```
 
     Threat actors also use PowerShell scripts for faster encoding process and result.  
 
     An example of Powershell script (ref [2])  
-
+    
+    ```pwsh
     param(
     [Parameter()][Alias("un")][string]$Username,
     [Parameter()][Alias("pw")][string]$Password
@@ -100,3 +109,4 @@ threat:
 
     Write-Host "Username: $Username"
     Write-Host "Password: $Password"
+    ```
