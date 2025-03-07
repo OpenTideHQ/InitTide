@@ -1,0 +1,52 @@
+name: OpenTide DetectionOps
+
+trigger:
+  branches:
+    include:
+      - "main" #Update this with your default branch
+
+pr:
+  branches:
+    include:
+      - "*" #By default, all branches are considered feature branches that merge to main and the pipeline will run on them        
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  - group: OpenTide #Create a variable group for OpenTide and use it for all your deployers variables/secrets
+    #You may use more variable groups as needed, or Azure KeyVault. In all cases, remember that you need
+    #to declare the environment variables corresponding to the secrets (see below), as by default secrets
+    #aren't visible to the pipeline as environment variables. 
+  - name: OpenTide.DefaultBranch #Remember to configure this correctly, as the default branch isn't found in pipeline variables by default
+    value: main      
+  - name: OpenTide.Wiki.Enabled
+    value: True #Set to False to skip all documentation jobs
+  - name: OpenTide.WikiRepo
+    value: #Link to your Azure DevOps Wiki, potentially prefixed with an access token 
+  - name: OpenTide.Wiki.RepoName
+    value: #Name of your Azure DevOps Wiki (repo name if you clone the Wiki locally) 
+  - name: OpenTide.DetectionRules.Path #Align this value with the path to Detection Rules, if changed
+    value: Objects/Detection Rules/
+  - name: OpenTide.Repo.Checkout.Depth #Leave default value as allows better Pull Requests Base Commit Resolution, but may be lowered in case of performance issues
+    value: 1000
+  - name: OpenTide.Commiter.UserEmail
+    value: #Fill this with what you'd like to show up as commiter
+  - name: OpenTide.Commiter.UserName
+    value: #Fill this with what you'd like to show up as commiter
+  #- name: SOME_SECRET #If you use variable groups, secrets aren't automatically exported as environment variables and you need to declare them like this
+  #  value: $(SOME_SECRET) #Exactly the same name you used in the variable group
+
+#By default the pipeline points to the GitHub repo, where it will fetch all the pipeline
+#definitions and clone the backend in the build directory. If you are developing locally,
+#you may adjust this to a repository you own - make sure it is called CoreTide, as this
+#name is necessary as part of the pipeline itself
+resources:
+  repositories:
+    - repository: coretide
+      type: github
+      name: OpenTideHQ/CoreTide  # Your GitHub repository
+      ref: development 
+      endpoint: GitHub OpenTide  # The service connection to GitHub
+  
+stages:
+  - template: Pipelines/Azure/opentide.yml@coretide
