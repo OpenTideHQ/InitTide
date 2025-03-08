@@ -14,17 +14,14 @@ pool:
 
 variables:
   - group: OpenTide #Create a variable group for OpenTide and use it for all your deployers variables/secrets
-    #You may use more variable groups as needed, or Azure KeyVault. In all cases, remember that you need
-    #to declare the environment variables corresponding to the secrets (see below), as by default secrets
-    #aren't visible to the pipeline as environment variables. 
+    #You may use more variable groups as needed, or Azure KeyVault. If you use secrets, read the section
+    #Secret Handling below and ensure .azure/set_secrets.yml is correctly configured
   - name: OpenTide.DefaultBranch #Remember to configure this correctly, as the default branch isn't found in pipeline variables by default
     value: main      
   - name: OpenTide.Wiki.Enabled
     value: True #Set to False to skip all documentation jobs
-  - name: OpenTide.WikiRepo
-    value: #Link to your Azure DevOps Wiki, potentially prefixed with an access token 
   - name: OpenTide.Wiki.RepoName
-    value: #Name of your Azure DevOps Wiki (repo name if you clone the Wiki locally) 
+    value: #Name of your Azure DevOps Wiki (e.g. Project.wiki)
   - name: OpenTide.DetectionRules.Path #Align this value with the path to Detection Rules, if changed
     value: Objects/Detection Rules/
   - name: OpenTide.Repo.Checkout.Depth #Leave default value as allows better Pull Requests Base Commit Resolution, but may be lowered in case of performance issues
@@ -33,8 +30,13 @@ variables:
     value: #Fill this with what you'd like to show up as commiter
   - name: OpenTide.Commiter.UserName
     value: #Fill this with what you'd like to show up as commiter
-  #- name: SOME_SECRET #If you use variable groups, secrets aren't automatically exported as environment variables and you need to declare them like this
-  #  value: $(SOME_SECRET) #Exactly the same name you used in the variable group
+
+# IMPORTANT - Secret Handling
+# When you declare a variable group which contains variables that you set as secret
+# (toggled keypad, and value is hidden), the pipeline will no longer see those variables
+# as environment variables.
+# We handle it with a special .azure/set_secrets.yml template, which you can use to declare your
+# secrets.
 
 #By default the pipeline points to the GitHub repo, where it will fetch all the pipeline
 #definitions and clone the backend in the build directory. If you are developing locally,
@@ -47,6 +49,10 @@ resources:
       name: OpenTideHQ/CoreTide  # Your GitHub repository
       ref: development 
       endpoint: GitHub OpenTide  # The service connection to GitHub
-  
+    - repository: Wiki # Your target Wiki repository - you can remove this resource if you set OpenTide.Wiki.Enabled to False
+      type: git
+      name: #Replace with the Wiki repo name, Must be the same as OpenTide.Wiki.RepoName
+      ref: wikiMaster
+
 stages:
   - template: Pipelines/Azure/opentide.yml@coretide
