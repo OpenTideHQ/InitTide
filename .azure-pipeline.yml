@@ -35,6 +35,10 @@ variables:
   - name: OpenTide.Deployment.Environment.Staging
     value: #Fill this with the environment you created for Production deployment, for example name it "Staging Rules"
 
+# Deployment Environments
+# Ensure to create those beforehand, and to allow the pipeline to access
+# under Pipeline permissions, in the Security panel of the Environment
+
 # IMPORTANT - Secret Handling
 # When you declare a variable group which contains variables that you set as secret
 # (toggled keypad, and value is hidden), the pipeline will no longer see those variables
