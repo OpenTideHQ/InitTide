@@ -1,16 +1,16 @@
 {
   "yaml.schemas": {
     "Schemas/TVM Schema.json": [
-      "**/Threat*Vector*Models/*.yaml"
+      "**/Vector*Models/*.yaml"
     ],
     "Schemas/CDM Schema.json": [
-      "**/Cyber*Detection*Models/*.yaml"
+      "**/Detection*Models/*.yaml"
     ],
     "Schemas/MDR Schema.json": [
-      "**/Managed*Detection*Rules/*.yaml"
+      "**/Detection*Rules/*.yaml"
     ],
     "Schemas/BDR Schema.json": [
-      "**/Business*Detection*Requests/*.yaml"
+      "**/Detection*Requests/*.yaml"
     ],
   },
 
