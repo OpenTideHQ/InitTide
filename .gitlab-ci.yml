@@ -52,15 +52,6 @@ variables:
   TIDE_CORE_LOCAL: git@$CI_SERVER_HOST:$CI_PROJECT_NAMESPACE/$TIDE_CORE_REPO.git #Change as required
   TIDE_CORE_ACCESS: $TIDE_CORE_REMOTE #Or TIDE_CORE_LOCAL, if you are using a local setup
 
-#rules:
-#  - if: $TIDE_CORE_SETUP == "REMOTE"
-#    variables:
-#      TIDE_CORE_ACCESS: git@github.com:OpenTideHQ/CoreTide.git
-#  - if: $TIDE_CORE_SETUP == "LOCAL"
-#    variables:
-#      TIDE_CORE_ACCESS: git@$CI_SERVER_HOST:$CI_PROJECT_NAMESPACE/$TIDE_CORE_REPO.git
-
-
 # For the maximum compatibility in build environments, we privilege SSH
 # over HTTPS in most cases. The SSH key will also be used to prove
 # commits, proving they were made automatically from a trusted key.
