@@ -48,14 +48,9 @@ variables:
   TIDE_DEPLOYMENT: "ENABLED" # Set to DISABLED to prevent any deployment
   DOCUMENTATION_TYPE: GLFM
   GIT_DEPTH: 150
-
-rules:
-  - if: $TIDE_CORE_SETUP == "REMOTE"
-    variables:
-      TIDE_CORE_ACCESS: git@github.com:OpenTideHQ/CoreTide.git
-  - if: $TIDE_CORE_SETUP == "LOCAL"
-    variables:
-      TIDE_CORE_ACCESS: git@$CI_SERVER_HOST:$CI_PROJECT_NAMESPACE/$TIDE_CORE_REPO.git
+  TIDE_CORE_REMOTE: git@github.com:OpenTideHQ/CoreTide.git
+  TIDE_CORE_LOCAL: git@$CI_SERVER_HOST:$CI_PROJECT_NAMESPACE/$TIDE_CORE_REPO.git #Change as required
+  TIDE_CORE_ACCESS: $TIDE_CORE_REMOTE #Or TIDE_CORE_LOCAL, if you are using a local setup
 
 # For the maximum compatibility in build environments, we privilege SSH
 # over HTTPS in most cases. The SSH key will also be used to prove
@@ -112,11 +107,11 @@ default:
 # Imports pipeline remotely from CoreTIDE at core.europa.eu, using a sequence
 # of raw nested imports
 include:
+  #Remote Setup
   - remote: 'https://raw.githubusercontent.com/OpenTideHQ/CoreTide/refs/heads/development/Pipelines/Gitlab/tide_remote.yml'
-    rules:
-      - if: $TIDE_CORE_SETUP == "REMOTE"
-  - project: 'group/coretide' #Add the group or path where coretide is located
-    ref: core # Or another branch if you have set it up
-    file: '/Pipelines/Gitlab/tide.yml' #Do not modify
-    rules:
-      - if: $TIDE_CORE_SETUP == "LOCAL"
+  #Local Setup
+  #- project: 'group/coretide' #Add the group or path where coretide is located
+  #  ref: core # Or another branch if you have set it up
+  #  file: '/Pipelines/Gitlab/tide.yml' #Do not modify
+  #  rules:
+  #    - if: $TIDE_CORE_SETUP == "LOCAL"
