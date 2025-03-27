@@ -37,7 +37,7 @@ variables:
   TIDE_REPO_ACCESS: git@$CI_SERVER_HOST:$CI_PROJECT_PATH.git
   TIDE_WIKI_ACCESS: git@$CI_SERVER_HOST:$CI_PROJECT_PATH.wiki.git
   # Edit this variable to change where CoreTIDE can be found
-  TIDE_CORE_REPO: coretide
+  TIDE_CORE_REPO: CoreTide
   TIDE_CORE_SETUP: REMOTE # Set to LOCAL if you wish to clone CoreTIDE in your local gitlab instance
                           # When set to remote, will fetch pipelines from the code.europa.eu location,
                           # and inject this repository during pipelines. REMOTE is the default strategy
