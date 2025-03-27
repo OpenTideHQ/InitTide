@@ -1,7 +1,7 @@
 {
   "yaml.schemas": {
     "Schemas/TVM Schema.json": [
-      "**/Vector*Models/*.yaml"
+      "**/Threat*Vectors/*.yaml"
     ],
     "Schemas/CDM Schema.json": [
       "**/Detection*Models/*.yaml"
@@ -10,7 +10,7 @@
       "**/Detection*Rules/*.yaml"
     ],
     "Schemas/BDR Schema.json": [
-      "**/Detection*Requests/*.yaml"
+      "**/Business*Detections/*.yaml"
     ],
   },
 
