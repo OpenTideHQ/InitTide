@@ -1,0 +1,31 @@
+[platform]
+enabled = false
+identifier = "crowdstrike"
+name = "Crowdstrike Falcon"
+subschema = "Crowdstrike"
+description = """The CrowdStrike Falcon® platform delivers real-time
+threat detection, simplified management, and proactive threat hunting
+for unmatched protection.
+"""
+flags = [""]
+
+#[[modifiers]]
+#name = "Modifier Demo"
+#description = "Example of using modifiers as a development lifecycle automation"
+#[modifiers.conditions]
+#status = ["STAGING"]
+#[modifiers.modifications]
+#alert.severity = "Informational"
+#alert.title = "prefix::Staging "
+
+#[[tenants]]
+#name = "Name"
+#description = "Tenant Description"
+#deployment = "ALWAYS" #STAGING, PRODUCTION, MANUAL (only when defined in MDR) or ALWAYS
+#[tenants.setup]
+#proxy = false
+#ssl = true
+#api = ""
+#customer_id = ""
+#client_id = ""
+#client_secret = ""
