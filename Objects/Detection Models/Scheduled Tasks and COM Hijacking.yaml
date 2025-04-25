@@ -1,0 +1,143 @@
+name: Scheduled Tasks and COM Hijacking
+criticality: High
+references:
+  public:
+    1: https://www.cyberbit.com/endpoint-security/com-hijacking-windows-overlooked-security-vulnerability/
+    2: https://cyberstruggle.org/2021/12/14/com-hijacking-for-persistence/
+    3: https://enigma0x3.net/2016/05/25/userland-persistence-with-scheduled-tasks-and-com-handler-hijacking/
+    4: https://www.elastic.co/guide/en/security/current/suspicious-execution-via-scheduled-task.html
+    5: https://www.hackingarticles.in/windows-persistence-com-hijacking-mitre-t1546-015/
+  #internal:
+    #a: 
+  #restricted:
+    #A: 
+  #reports:
+    #-
+
+metadata:
+  uuid: 6eca7557-2004-4a34-8a21-e258a5100ea4
+  schema: cdm::2.0
+  tlp: clear
+  version: 3
+  created: 2023-03-21
+  modified: 2025-03-28
+  author: ec-digit-catch@ec.europa.eu
+
+detection:
+  vectors:
+    - 5e66f826-4c4b-4357-b9c5-2f40da207f34 #Scheduled tasks to maintain persistence in registry
+  killchain: Persistence
+  att&ck: T1546.015
+  methods:
+    - Process Analysis
+    - Scheduled Job Analysis
+    - System Init Config Analysis
+    - System File Analysis
+    - Process Spawn Analysis
+    - Process Lineage Analysis
+    - Script Execution Analysis
+  maturity: Procedures
+  feasibility: Available
+  datasources:
+    - Windows Registry Key Creation
+    - Scheduled Job
+    - Process
+    - Script
+    - Command Execution
+    - Application Log
+  collection:
+    - Carbon Black EDR Connectors
+    - Windows Security Logs
+    - Microsoft Defender for Endpoint
+    - Sysmon Logs
+    - Event Tracing for Windows
+  artifacts:
+    - Windows Registry Key
+    - Client Computer
+    - Desktop Computer
+    - Laptop Computer
+    - Process Image
+    - Resource Access
+    - Task Schedule
+    - Task Scheduler Process
+    - System Init Configuration
+  guidelines: |
+    To detect Scheduled Task abuse and COM Hijacking with precision, focusing on the 
+    detection aspect, the following methods can be used.
+
+    ### Detection of Scheduled Task Abuse    
+
+    1. **Event Log Analysis**: Monitor the Microsoft-Windows-TaskScheduler/Operational log for:
+      - **Event ID 106**: New task creation, including task name and user context.
+      - **Event ID 140**: Task modification, particularly looking for path changes in `Actions`.
+      - **Event ID 141**: Task deletion.
+      - Additionally, in the Security Log (with Object Access auditing enabled):
+        - **Event ID 4698**: Task creation with XML configuration details.
+        - **Event ID 4700/4701**: Task enable/disable events.    
+
+    2. **Registry Monitoring**: Focus on `HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree` for:
+      - Missing **SD** registry value, indicating hidden tasks via SDDL tampering.
+      - New subkeys created without corresponding scheduled tasks in the GUI or via schtasks.
+      - Alert on **Event ID 4657** (registry value deletion) targeting `Schedule\TaskCache\Tree`.    
+
+    3. **Command-Line Forensics**: Detect suspicious `schtasks.exe` arguments, such as:
+      - `/TR` pointing to URLs (`http://`, `https://`).
+      - `/ST` timestamps matching known adversary patterns.    
+
+    4. **Process Lineage Analysis**: Identify abnormal parent/child relationships, like:
+      - `svchost.exe → taskeng.exe → suspicious_child_process`.
+      - `CompatTelRunner.exe` spawning unexpected processes.    
+
+    5. **Tool-Based Enumeration**: Use tools like `Get-ScheduledTask | Export-Clixml` 
+    for baseline comparison and detect hidden tasks with direct registry queries.    
+
+    ### Detection of COM Hijacking    
+
+    1. **Registry Key Monitoring**: Target paths for unexpected DLL paths, such as:
+      - `HKEY_CURRENT_USER\Software\Classes\CLSID\{GUID}\InProcServer32`.
+      - `HKLM\SOFTWARE\Classes\CLSID\{GUID}\InProcServer32`.
+      - Alert on non-system DLL paths and missing `ThreadingModel` values.    
+
+    2. **Scheduled Task + COM Correlation**: Use scripts like **Get-ScheduledTaskComHandler.ps1** 
+    to list tasks with COM handlers and flag tasks where `InProcServer32` points to user-writable locations.    
+
+    3. **DLL Loading Patterns**: Monitor for `taskhostw.exe` loading DLLs from temp 
+    directories or UNC paths via `regsvr32.exe`. Utilize **Procmon** filters for suspicious DLL loads.    
+
+    4. **PowerShell Script Block Logging**: Detect registry modification attempts, such 
+    as setting item properties on CLSID paths.    
+
+    5. **COM Registry Key Analysis**: Check for:
+      - Unusual modifications to COM registry keys, such as `HKLM\Software\Classes\CLSID` and `AppID`.
+      - Unexpected COM object registrations that reference MSI files, which may indicate persistence attempts.
+      - Review changes in COM handler configurations for anomalies, ensuring that any 
+      modifications do not redirect to malicious executables.    
+
+    ### Advanced Detection Strategies    
+
+    1. **TelemetryController Hijack Detection**: Monitor for `CompatTelRunner.exe` spawning 
+    script hosts or network utilities.
+    2. **Atomic Red Team Testing**: Validate defenses with test commands that create 
+    and run scheduled tasks, verifying detection in operational logs.    
+
+    ### Evasion Countermeasures    
+
+    - Implement registry auditing for `Schedule\TaskCache\Tree` subkey deletions.
+    - Block non-admin users from creating `HKCU\Software\Classes\CLSID` entries via GPO.
+    - Use kernel-mode ETW tracing for comprehensive DLL load monitoring.    
+
+    Combining these detection methods with tools like Elastic's detection rules and 
+    Sigma rules can provide comprehensive coverage against Scheduled Task abuse and 
+    COM Hijacking. The key detection objective is to identify the combination of these 
+    techniques by monitoring scheduled task creation and modification, especially those 
+    executing high-privilege applications, and analyzing registry changes related to 
+    COM objects linked to critical system or user processes.
+  tuning: |
+    False positives may arise from legitimate scheduled tasks or administrative actions 
+    that modify registry keys related to COM objects. For example, system administrators 
+    often create or modify scheduled tasks as part of regular system maintenance, 
+    which could trigger alerts. Similarly, some applications may legitimately modify 
+    COM object paths during updates or installations. Careful tuning is required to 
+    differentiate between normal administrative activities and malicious behavior. 
+    Thresholds based on frequency, user context, and associated actions can help reduce 
+    noise and focus on truly suspicious activities.
