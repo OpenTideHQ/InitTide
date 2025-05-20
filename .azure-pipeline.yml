@@ -21,7 +21,9 @@ variables:
   - name: OpenTide.Wiki.Enabled
     value: True #Set to False to skip all documentation jobs
   - name: OpenTide.Wiki.RepoName
-    value: #Name of your Azure DevOps Wiki (e.g. Project.wiki)
+    value: #Name of your Azure DevOps Wiki (e.g. OpenTideWiki)
+  - name: OpenTide.Wiki.BranchName
+    value: #Name of your Azure DevOps Wiki Branch (e.g. main)
   - name: OpenTide.DetectionRules.Path #Align this value with the path to Detection Rules, if changed
     value: Objects/Detection Rules/
   - name: OpenTide.Repo.Checkout.Depth #Leave default value as allows better Pull Requests Base Commit Resolution, but may be lowered in case of performance issues
@@ -59,8 +61,8 @@ resources:
       endpoint: GitHub OpenTide  # The service connection to GitHub
     - repository: Wiki # Your target Wiki repository - you can remove this resource if you set OpenTide.Wiki.Enabled to False
       type: git
-      name: #Replace with the Wiki repo name, Must be the same as OpenTide.Wiki.RepoName
-      ref: wikiMaster
+      name: #Replace with the Wiki repo name, must be the same as OpenTide.Wiki.RepoName
+      ref: #Replace with the Wiki repo branch name, must be the same as OpenTide.Wiki.BranchName
 
 stages:
   - template: Pipelines/Azure/opentide.yml@coretide
