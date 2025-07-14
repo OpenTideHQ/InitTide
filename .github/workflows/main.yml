@@ -1,0 +1,61 @@
+name: OpenTide Pipeline
+
+# This workflow is triggered on pushes and pull requests to the main branch.
+# Pull Request workflows are Staging workflows, while Push workflows are Production workflows.
+# If you do not use main as your default branch, change the branch name below.
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Secrets:
+    runs-on: ubuntu-latest
+    outputs:
+      opentide_secrets: ${{ steps.export_env.outputs.opentide_secrets }}
+    steps:
+      - name: Export secrets as env vars and stringify
+        id: export_env
+        run: |
+          opentide_secrets=$(env | tr '\n' ';')
+          encoded_secrets=$(echo "$opentide_secrets" | xxd -ps -c 10000)
+          echo "opentide_secrets=$encoded_secrets" >> $GITHUB_OUTPUT
+        # env:
+          # Add your configuration secrets here, for example:
+          # SECRET: ${{ secrets.SECRET }}
+          # You can add more secrets as needed. Ensure that in your configuration files,
+          # you prefix the secret name with a dollar sign ($) to make the pipeline
+          # try to fethch it from the environment variables. 
+          # Ensure that you have set these secrets configured in your GitHub repository settings
+
+  # The workflow imports point to the canonical OpenTide pipeline definitions,
+  # which are stored in the OpenTideHQ/CoreTide repository, on the development branch.
+  # If you want to use a different branch, change the branch name after the @ symbol.
+  Validation:
+    uses: OpenTideHQ/CoreTide/.github/workflows/validation.yml@development
+    needs: Secrets
+    with:
+      coretide_ref: development
+      opentide_secrets: ${{ needs.Secrets.outputs.opentide_secrets }}
+
+  Framework:
+    uses: OpenTideHQ/CoreTide/.github/workflows/framework.yml@development
+    needs:
+      - Validation
+      - Secrets
+    with:
+      coretide_ref: development
+      opentide_secrets: ${{ needs.Secrets.outputs.opentide_secrets }}
+
+  Deploy:
+    uses: OpenTideHQ/CoreTide/.github/workflows/deployment.yml@development
+    needs:
+      - Validation
+      - Secrets
+    if: ${{ needs.Validation.outputs.mdr_changes == 'true' }}
+    with:
+      coretide_ref: development
+      opentide_secrets: ${{ needs.Secrets.outputs.opentide_secrets }}
