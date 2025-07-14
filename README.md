@@ -1,9 +1,15 @@
-<table align="center"><tr><td align="center" width="9999">
-<img src="inittide-logo.png" align="center" width="150" alt="Project icon">
+<table width="100%">
+  <tr>
+    <td align="left" width="120">
+      <img src="inittide-logo.png" alt="OpenCut Logo" width="100" />
+    </td>
+    <td align="right">
+      <h1>InitTide <span style="font-size: 0.7em; font-weight: normal;"></span></h1>
+      <h3 style="margin-top: -10px;">The Entry Point to Detection Ops</h3>
+    </td>
+  </tr>
+</table>
 
-# InitTide
-
-_The Entry Point to Detection Ops_
 
 </td></tr></table>
 
