@@ -26,10 +26,13 @@ you may copy in your repo any of the config file described in [CoreTide/Configur
 For system deployment configurations, defining API Tokens and other secrets in a configuration file isn't safe. The framework supports a way to retrieve secrets from the environment variables, by prefixing the variable name with `$`. You then only need to create those variables on your CI/CD system (Gitlab CI Variable, Azure DevOps Variable Groups etc.).
 
 ##### WIP
-Splunk, Sentinel and Carbon Black Cloud will migrate to the MDRv4 deployment framework, and only the `[tenant.setup]` section will be relevant in the future. For now, refer to the configuration file for your chosen platform - it will contain all the required information to understand where secrets must be placed, and in which format.
+Splunk and Carbon Black Cloud will migrate to the MDRv4 deployment framework, and only the `[tenant.setup]` section will be relevant in the future. For now, refer to the configuration file for your chosen platform - it will contain all the required information to understand where secrets must be placed, and in which format.
 
 ##### Azure DevOps
 IMPORTANT - In Azure Pipelines, if you declare a CI Variable as a secret, it will prevent it from being directly read by the CoreTide scripts as environment variables . To work around this limitation, you can use `.azure/set_secrets.yml`, which will allow you to declare your variables again and broadcast them to the pipeline. The secrets will still not be printed to the console, even if they will exist in the environment variable context.
+
+##### Github Actions
+Similarly to Github Actions, you need to declare your secrets in `.github/workflows/main.yml` under the Secrets job, by passing them as environment variables. Environment variables are frozen, stringified, encoded to hex and then injected to imported workflows from CoreTide, and finally made available to the runner environment. Even Secrets can't be printed to the console and don't exit the runner environment. 
 
 ### Setting up CI/CD
 
