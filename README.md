@@ -37,7 +37,7 @@ CoreTide currently supports the following CI/CD systems out of the box :
 
 - Azure Pipelines
 - Gitlab CI
-- Github Actions (in development)
+- Github Actions
 
 We welcome any participation and feedback regarding the CI/CD systems that are most useful to the community. If your VCS is supported, you need to provision a runner for the project and ensure it's able to reach to the your target systems API endpoints (if you wish to use Detection-as-Code). Refer to the relevant CI/CD file in InitTide to see what to configure.
 
