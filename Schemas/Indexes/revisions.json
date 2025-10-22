@@ -1,4 +1,17 @@
 {
+    "2743bf18-3b86-4721-bf3e-153dcda0b149": {
+        "name": "Azure - Valid Credentials",
+        "object": "Threat Vectors",
+        "description": "This threat vector within the Initial Access phase represents a significant risk \nin Azure environments. This attack technique\u2014formally designated around adversaries \nacquiring and abusing legitimate authentication credentials to gain access to Azure \nresources or Azure Active Directory (AzureAD).\n\n### Example Attack Scenario\n\n- The attacker logs in directly to the Azure Portal or via CLI (e.g., `az login`) \nusing valid credentials.\n- Once inside, the attacker can enumerate resources, exfiltrate data, manipulate \nconfigurations, or leverage the account for further attacks, depending on the permissions \ngranted to the compromised account.\n- If privileged service principal credentials are obtained, the attacker can use \nsecrets or certificates to automate access and escalate privileges.\n\n### Attack Goals and Impact\n\n- **Primary Goals:**\n  - Establish initial access to Azure environments in a stealthy, low-noise manner \n  by using valid, non-malicious authentication flows.\n  - Access sensitive data, manipulate cloud resources, and potentially escalate \n  privileges or persist within the target environment.\n\n- **Impact:**\n  - Complete compromise of Azure resources accessible by the stolen account (files, \n  databases, VMs, identity services, etc.).\n  - Potential for privilege escalation if the account is eligible for higher roles \n  or Privileged Identity Management (PIM).\n  - Ability to create backdoors, perform lateral movement, and evade detection (since \n  all actions appear legitimate).\n  - Depending on account privileges, ransomware deployment, data exfiltration, and \n  broad access to organizational assets may occur.\n\n### Attack Flow and Methodology\n\n1. **Reconnaissance**\n  - Attackers gather information on users or service principals, identifying potential \n  targets through open-source intelligence, misconfigurations, or enumeration of \n  publicly accessible resources.\n\n2. **Credential Acquisition**\n  - Common methods: phishing (email/SMS/voice), brute-force/password spraying, \n  harvesting credentials from previous breaches, or exploiting cloud API/application \n  misconfigurations.\n  - Service principal secrets/certificates may be obtained from publicly accessible \n  repositories, misconfigured code, or automation scripts.\n\n3. **Authentication**\n  - Adversary logs into Azure Portal or invokes cloud APIs using the acquired credentials.\n  - For service principals: authentication occurs via CLI or programmatic access \n  using certificates/secrets.\n\n4. **Enumeration and Expansion**\n  - Mapping out resources, roles, permissions; searching for sensitive data or \n  additional high-value targets.\n  - Assessing role activation and privilege escalation opportunities (e.g., via \n  PIM or RBAC misconfigurations).\n\n5. **Execution of Attack Objectives**\n  - Data exfiltration, sabotage, account persistence (creating additional user \n  accounts or credentials), lateral movement to other resources, or exploitation \n  for financial gain.\n  - Actions are typically performed under the guise of the legitimate account to \n  avoid detection.\n\n6. **Persistence and Defense Evasion**\n  - Adversaries may create new accounts, modify access policies, or abuse automation \n  to ensure continued access.\n  - Use of valid credentials enables attackers to blend with legitimate user activity, \n  thus evading many traditional security detection systems.\n",
+        "revisions": {
+            "2": {
+                "date": "2025-10-22",
+                "message": "Sample Commit Message",
+                "author": "Sample Commit Author",
+                "commit": "Sample Commit SHA"
+            }
+        }
+    },
     "bdc58fee-8da6-4fc9-8fbd-30f8fd156bc7": {
         "name": "Powershell with encoded payload passed to cmdline",
         "object": "Threat Vectors",
@@ -19,6 +32,19 @@
         "revisions": {
             "2": {
                 "date": "2025-10-17",
+                "message": "Sample Commit Message",
+                "author": "Sample Commit Author",
+                "commit": "Sample Commit SHA"
+            }
+        }
+    },
+    "f4a8b3c2-7e5d-4f1a-bc8e-9d2a6e7c8f0b": {
+        "name": "Detect Abuse of Valid Azure Credentials",
+        "object": "Detection Objectives",
+        "description": "Detect when adversaries abuse valid Azure AD/Entra ID credentials to gain \nunauthorized access to cloud resources. This detection objective focuses on \nidentifying anomalous authentication patterns, suspicious access behaviors, \nand privilege abuse that indicate compromised credentials are being used \nfor malicious purposes.\n\nAttackers obtain credentials through various means (phishing, password spraying, \ncredential leaks) and use them to authenticate legitimately to Azure services, \nmaking detection challenging as the authentication itself appears valid. This \nobjective aims to identify the contextual anomalies and behavioral indicators \nthat differentiate legitimate use from credential abuse.\n\nKey focus areas include:\n- Anomalous sign-in patterns (location, device, time, velocity)\n- Privilege escalation attempts post-authentication\n- Unusual resource access patterns\n- Service principal and application credential abuse\n- Cross-tenant authentication anomalies\n",
+        "revisions": {
+            "1": {
+                "date": "2025-10-22",
                 "message": "Sample Commit Message",
                 "author": "Sample Commit Author",
                 "commit": "Sample Commit SHA"

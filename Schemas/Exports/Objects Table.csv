@@ -1,4 +1,75 @@
 UUID,Name,Type,Tlp,Description,Version,Created,Modified,Childs,Parents,Chaining,Threat Actors,ATT&CK
+2743bf18-3b86-4721-bf3e-153dcda0b149,Azure - Valid Credentials,Threat Vectors,clear,"This threat vector within the Initial Access phase represents a significant risk 
+in Azure environments. This attack technique—formally designated around adversaries 
+acquiring and abusing legitimate authentication credentials to gain access to Azure 
+resources or Azure Active Directory (AzureAD).
+
+### Example Attack Scenario
+
+- The attacker logs in directly to the Azure Portal or via CLI (e.g., `az login`) 
+using valid credentials.
+- Once inside, the attacker can enumerate resources, exfiltrate data, manipulate 
+configurations, or leverage the account for further attacks, depending on the permissions 
+granted to the compromised account.
+- If privileged service principal credentials are obtained, the attacker can use 
+secrets or certificates to automate access and escalate privileges.
+
+### Attack Goals and Impact
+
+- **Primary Goals:**
+  - Establish initial access to Azure environments in a stealthy, low-noise manner 
+  by using valid, non-malicious authentication flows.
+  - Access sensitive data, manipulate cloud resources, and potentially escalate 
+  privileges or persist within the target environment.
+
+- **Impact:**
+  - Complete compromise of Azure resources accessible by the stolen account (files, 
+  databases, VMs, identity services, etc.).
+  - Potential for privilege escalation if the account is eligible for higher roles 
+  or Privileged Identity Management (PIM).
+  - Ability to create backdoors, perform lateral movement, and evade detection (since 
+  all actions appear legitimate).
+  - Depending on account privileges, ransomware deployment, data exfiltration, and 
+  broad access to organizational assets may occur.
+
+### Attack Flow and Methodology
+
+1. **Reconnaissance**
+  - Attackers gather information on users or service principals, identifying potential 
+  targets through open-source intelligence, misconfigurations, or enumeration of 
+  publicly accessible resources.
+
+2. **Credential Acquisition**
+  - Common methods: phishing (email/SMS/voice), brute-force/password spraying, 
+  harvesting credentials from previous breaches, or exploiting cloud API/application 
+  misconfigurations.
+  - Service principal secrets/certificates may be obtained from publicly accessible 
+  repositories, misconfigured code, or automation scripts.
+
+3. **Authentication**
+  - Adversary logs into Azure Portal or invokes cloud APIs using the acquired credentials.
+  - For service principals: authentication occurs via CLI or programmatic access 
+  using certificates/secrets.
+
+4. **Enumeration and Expansion**
+  - Mapping out resources, roles, permissions; searching for sensitive data or 
+  additional high-value targets.
+  - Assessing role activation and privilege escalation opportunities (e.g., via 
+  PIM or RBAC misconfigurations).
+
+5. **Execution of Attack Objectives**
+  - Data exfiltration, sabotage, account persistence (creating additional user 
+  accounts or credentials), lateral movement to other resources, or exploitation 
+  for financial gain.
+  - Actions are typically performed under the guise of the legitimate account to 
+  avoid detection.
+
+6. **Persistence and Defense Evasion**
+  - Adversaries may create new accounts, modify access policies, or abuse automation 
+  to ensure continued access.
+  - Use of valid credentials enables attackers to blend with legitimate user activity, 
+  thus evading many traditional security detection systems.
+",2,2025-08-14,2025-09-04,f4a8b3c2-7e5d-4f1a-bc8e-9d2a6e7c8f0b,,,"APT28, APT29, APT33, APT5, Scattered Spider, HAFNIUM, [Enterprise] Ke3chang, LAPSUS","T1078.004, T1110, T1555"
 bdc58fee-8da6-4fc9-8fbd-30f8fd156bc7,Powershell with encoded payload passed to cmdline,Threat Vectors,clear,"When working with PowerShell, a threat actor can encode a command or script
 using Base64 or other type of encoding and pass it as a parameter to the
 command line. This technique is useful for obfuscating sensitive
@@ -112,6 +183,25 @@ Useful telemetry will include:
 - Windows Security Event ID 4688 : A new process has been created including process command-line
 - Sysmon Event IDs 1 and 7: Process creation and Image loaded
 ",2,2024-04-26,2025-01-10,0be66eea-4ae4-4544-811b-52651e20d744,bdc58fee-8da6-4fc9-8fbd-30f8fd156bc7,,,
+f4a8b3c2-7e5d-4f1a-bc8e-9d2a6e7c8f0b,Detect Abuse of Valid Azure Credentials,Detection Objectives,clear,"Detect when adversaries abuse valid Azure AD/Entra ID credentials to gain 
+unauthorized access to cloud resources. This detection objective focuses on 
+identifying anomalous authentication patterns, suspicious access behaviors, 
+and privilege abuse that indicate compromised credentials are being used 
+for malicious purposes.
+
+Attackers obtain credentials through various means (phishing, password spraying, 
+credential leaks) and use them to authenticate legitimately to Azure services, 
+making detection challenging as the authentication itself appears valid. This 
+objective aims to identify the contextual anomalies and behavioral indicators 
+that differentiate legitimate use from credential abuse.
+
+Key focus areas include:
+- Anomalous sign-in patterns (location, device, time, velocity)
+- Privilege escalation attempts post-authentication
+- Unusual resource access patterns
+- Service principal and application credential abuse
+- Cross-tenant authentication anomalies
+",1,2025-10-15,2025-10-15,"12fb0e6a-a4e4-42d3-b77b-3c9c96f90f0b, d4d7e42b-3f9b-41c7-8dfb-ee7021ee806f, 11686b3d-5f9d-4c1e-b3a8-4bae83653d24, 353add53-6e14-47df-b65a-a591d2c6aacd",2743bf18-3b86-4721-bf3e-153dcda0b149,,,"T1078.004, T1110, T1555"
 0be66eea-4ae4-4544-811b-52651e20d744,RBA_RR - WIN base64 encoded powershell payload,Detection Rules,clear,"Detect base64 encoded PowerShell payload that could be used to launch 
 a process or a script.
 The detection applies up to 2 levels of encoded payload (a first payload 

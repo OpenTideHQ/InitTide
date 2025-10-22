@@ -4,6 +4,24 @@
     },
     "techniques": [
         {
+            "techniqueID": "T1078.004",
+            "color": "#fc6b6b",
+            "comment": "[TVM] Azure - Valid Credentials",
+            "enabled": true
+        },
+        {
+            "techniqueID": "T1110",
+            "color": "#fc6b6b",
+            "comment": "[TVM] Azure - Valid Credentials",
+            "enabled": true
+        },
+        {
+            "techniqueID": "T1555",
+            "color": "#fc6b6b",
+            "comment": "[TVM] Azure - Valid Credentials",
+            "enabled": true
+        },
+        {
             "techniqueID": "T1027.010",
             "color": "#74c476",
             "comment": "[CDM] Powershell encoded payload to start new process, [MDR] RBA_RR - WIN base64 encoded powershell payload",
