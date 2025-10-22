@@ -1,0 +1,37 @@
+# OpenTide Log Sources Configuration
+# This file defines assets and log sources for your security monitoring environment.
+# Customize the examples below to match your actual infrastructure and logging systems.
+
+# Assets represent physical or logical entities in your environment (servers, applications, networks, etc.)
+# Define assets that generate logs you want to monitor for security purposes.
+[[assets]]
+name = "Example Asset"
+description = "Example asset - Customize this to represent your actual infrastructure components such as servers, workstations, applications, cloud services, network devices, or any other entity that generates security logs. This description appears in the schema to guide users."
+criticality = "High Value"
+[assets.custom_details]
+# Add any custom metadata specific to your environment
+owner = "IT Operations"
+location = "Primary Data Center"
+os = "Windows Server 2022"
+
+[[assets]]
+name = "AWS S3"
+description = "Amazon S3 object storage service hosting application data, backups, and file repositories"
+criticality = "High Value"
+
+[[detectors]]
+name = "AWS Guardduty"
+description = "AWS GuardDuty threat detection service monitoring for malicious activity and unauthorized behavior across AWS accounts"
+references = [""]
+assets = ["AWS S3"]
+
+# Log sources define where security event data originates from and which detection system ingests it.
+# Configure these to match your actual SIEM, EDR, and other security data sources.
+[[logsources]]
+name = "Example Log Source"
+description = "Example log source - Customize this to represent your actual log sources (endpoint logs, firewall logs, cloud audit logs, application logs, etc.). This description helps users understand what data is available for detections."
+system = "splunk"
+assets = ["Example Asset"]
+references = [
+    "https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/security-auditing-overview"
+]

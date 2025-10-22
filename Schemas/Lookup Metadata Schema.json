@@ -21,7 +21,7 @@
         "tlp": {
             "title": "\ud83d\udea6 Traffic Light Protocol",
             "type": "string",
-            "description": "The Traffic Light Protocol - or short: TLP - was designed with the objective to create a favorable classification scheme for sharing sensitive information while keeping the control over its distribution at the same time.",
+            "description": "Rate the lookup sharability. Take particular notice of its content and source of information.",
             "example": "green",
             "enum": [
                 "clear",
@@ -31,11 +31,11 @@
                 "red"
             ],
             "markdownEnumDescriptions": [
-                "\n### \u26aa clear\n\n\ud83d\udd11 **Identifier** : `TLP:CLEAR`\n\n \n\n\n\n\n\n\n\n---\n\nRecipients can spread this to the world, there is no limit on disclosure.\n",
-                "\n### \ud83d\udfe2 green\n\n\ud83d\udd11 **Identifier** : `TLP:GREEN`\n\n \n\n\n\n\n\n\n\n---\n\nLimited disclosure, recipients can spread this within their community. Sources may use TLP:GREEN when information is useful to increase awareness within their wider community.\n",
-                "\n### \ud83d\udfe0 amber\n\n\ud83d\udd11 **Identifier** : `TLP:AMBER`\n\n \n\n\n\n\n\n\n\n---\n\nLimited disclosure, recipients can only spread this on a need-to-know basis within their organization and its clients.\n",
-                "\n### \ud83d\udfe0 amber+strict\n\n\ud83d\udd11 **Identifier** : `TLP:AMBER+STRICT`\n\n \n\n\n\n\n\n\n\n---\n\nSimilar to TLP:AMBER, but restricts sharing to the organization only.\n",
-                "\n### \ud83d\udd34 red\n\n\ud83d\udd11 **Identifier** : `TLP:RED`\n\n \n\n\n\n\n\n\n\n---\n\nFor the eyes and ears of individual recipients only, no further disclosure.\n"
+                "\n### \u26aa clear\n\n\ud83d\udd11 **Identifier** : `TLP:CLEAR`\n\n_Vocabulary_ : `Traffic Light Protocol`\n\n \n\n\n\n\n\n---\n\nRecipients can spread this to the world, there is no limit on disclosure.\n",
+                "\n### \ud83d\udfe2 green\n\n\ud83d\udd11 **Identifier** : `TLP:GREEN`\n\n_Vocabulary_ : `Traffic Light Protocol`\n\n \n\n\n\n\n\n---\n\nLimited disclosure, recipients can spread this within their community. Sources may use TLP:GREEN when information is useful to increase awareness within their wider community.\n",
+                "\n### \ud83d\udfe0 amber\n\n\ud83d\udd11 **Identifier** : `TLP:AMBER`\n\n_Vocabulary_ : `Traffic Light Protocol`\n\n \n\n\n\n\n\n---\n\nLimited disclosure, recipients can only spread this on a need-to-know basis within their organization and its clients.\n",
+                "\n### \ud83d\udfe0 amber+strict\n\n\ud83d\udd11 **Identifier** : `TLP:AMBER+STRICT`\n\n_Vocabulary_ : `Traffic Light Protocol`\n\n \n\n\n\n\n\n---\n\nSimilar to TLP:AMBER, but restricts sharing to the organization only.\n",
+                "\n### \ud83d\udd34 red\n\n\ud83d\udd11 **Identifier** : `TLP:RED`\n\n_Vocabulary_ : `Traffic Light Protocol`\n\n \n\n\n\n\n\n---\n\nFor the eyes and ears of individual recipients only, no further disclosure.\n"
             ]
         },
         "description": {

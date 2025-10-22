@@ -1,8 +1,23 @@
 #default_responders = ""
 
-[status]
-#production = [ "PRODUCTION", "DISABLED", "REMOVED" ]
-#safe = [ "DESIGN" ]
+# Define custom statuses for your detection lifecycle
+# Uncomment and customize these examples to match your organization's workflow
+# By default there are base statuses maintained within CoreTide, and adding any [[statuses]]
+# entry will override all of them to allow you full customisation
+#[[statuses]]
+#name = "DEVELOPMENT"
+#description = "Initial development phase - detections are being written and tested"
+#strategy = "PREVIEW"
+
+#[[statuses]]
+#name = "TESTING"
+#description = "Quality assurance phase - detections are being validated in a test environment"
+#strategy = "PREVIEW"
+
+#[[statuses]]
+#name = "PRODUCTION"
+#description = "Live deployment - detections are actively monitoring in production"
+#strategy = "RELEASE"
 
 [promotion]
 #enabled = true

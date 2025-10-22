@@ -8,7 +8,6 @@ security solution that delivers visibility and AI-powered cyberthreat protection
 to help stop cyberattacks across Windows, macOS, Linux, Android, iOS, and IoT devices.
 """
 flags = [""]
-device_groups = [""]
 
 [[modifiers]]
 name = "Modifier Demo"
@@ -29,6 +28,8 @@ ssl = true
 tenant_id = "$MDE_TENANT_ID"
 client_id = "$MDE_CLIENT_ID"
 client_secret = "$MDE_CLIENT_SECRET"
+[tenants.parameters]
+device_groups = [""]
 
 #[defaults]
 #any_parameter.even_nested = "Default Value"

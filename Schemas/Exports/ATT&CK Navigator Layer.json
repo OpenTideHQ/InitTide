@@ -1,0 +1,58 @@
+{
+    "versions": {
+        "layer": "4.5"
+    },
+    "techniques": [
+        {
+            "techniqueID": "T1027.010",
+            "color": "#74c476",
+            "comment": "[CDM] Powershell encoded payload to start new process, [MDR] RBA_RR - WIN base64 encoded powershell payload",
+            "enabled": true
+        },
+        {
+            "techniqueID": "T1059",
+            "color": "#74c476",
+            "comment": "[CDM] Powershell encoded payload to start new process, [MDR] RBA_RR - WIN base64 encoded powershell payload",
+            "enabled": true
+        },
+        {
+            "techniqueID": "T1059.001",
+            "color": "#74c476",
+            "comment": "[CDM] Powershell encoded payload to start new process, [MDR] RBA_RR - WIN base64 encoded powershell payload",
+            "enabled": true
+        },
+        {
+            "techniqueID": "T1140",
+            "color": "#74c476",
+            "comment": "[CDM] Powershell encoded payload to start new process, [MDR] RBA_RR - WIN base64 encoded powershell payload",
+            "enabled": true
+        },
+        {
+            "techniqueID": "T1068",
+            "color": "#74c476",
+            "comment": "[CDM] Powershell encoded payload to start new process, [MDR] RBA_RR - WIN base64 encoded powershell payload",
+            "enabled": true
+        }
+    ],
+    "name": "layer",
+    "domain": "enterprise-attack",
+    "hideDisabled": false,
+    "legendItems": [
+        {
+            "label": "TVM Only",
+            "color": "#fc6b6b"
+        },
+        {
+            "label": "TVM + CDM",
+            "color": "#9e9ac8"
+        },
+        {
+            "label": "Full Coverage",
+            "color": "#74c476"
+        },
+        {
+            "label": "CDM Only - Needs to be checked",
+            "color": "#6baed6"
+        }
+    ]
+}

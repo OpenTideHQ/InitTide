@@ -18,8 +18,11 @@
   "yaml.schemaStore.enable": false,
   "yaml.trace.server": "verbose",
   "evenBetterToml.schema.associations": {
-    ".*defender_for_endpoint.*": "file://./Schemas/Configurations/Defender for Endpoint.json",
-    ".*sentinel_one.*": "file://./Schemas/Configurations/Sentinel One.json"
+    ".*defender_for_endpoint.*": "file://./Schemas/Configurations/Defender for Endpoint.schema.json",
+    ".*sentinel_one.*": "file://./Schemas/Configurations/Sentinel One.schema.json",
+    ".*crowdstrike.*": "file://./Schemas/Configurations/CrowdStrike.schema.json",
+    ".*deployment.*": "file://./Schemas/Configurations/deployment.schema.json",
+    ".*visibility.*": "file://./Schemas/Configurations/visibility.schema.json"
   },
   "evenBetterToml.schema.catalogs": [],
   "editor.suggest.showSnippets": false,

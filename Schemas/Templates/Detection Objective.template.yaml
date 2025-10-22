@@ -1,0 +1,66 @@
+name: 
+
+#references:
+  #public:
+    #1: 
+  #internal:
+    #a: 
+
+metadata:
+  uuid: 
+  schema: dom::1.0
+  version: 
+  created: YYYY-MM-DD
+  modified: YYYY-MM-DD
+  tlp: 
+  #author: 
+  #contributors:
+    #-
+  #organisation:
+    #uuid: 
+    #name: 
+
+objective:
+  priority: 
+  #att&ck:
+    #-
+  type: Threat
+  #threats:
+    #-
+  #investment: 
+  description: |
+    ...
+
+  composition:
+    strategy: 
+    description: |
+      ...
+  signals:
+    - name: 
+      uuid: 
+      description: |
+        ...
+      severity: 
+      #effort: 
+      methodology: 
+      data:
+        availability: 
+        requirements: |
+          ...
+        #logsources:
+          #-
+      entities:
+        - 
+      #detectors:
+        #- name: 
+          #technology: 
+          #description: |
+            #...
+          #link: 
+      #examples:
+        #- description: |
+            #...
+          #link: 
+          #language: 
+          #query: |
+            #...

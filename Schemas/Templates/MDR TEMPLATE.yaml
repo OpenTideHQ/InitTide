@@ -1,29 +1,42 @@
 name: 
-uuid: 
 #references:
   #public:
     #1: 
   #internal:
     #a: 
-  #reports:
-    #-
 
-#metadata:
+metadata:
+  uuid: 
+  schema: mdr::2.1
   version: 
   created: YYYY-MM-DD
   modified: YYYY-MM-DD
   tlp: 
-  author: author@domain.com
+  #author: 
   #contributors:
     #-
+  #organisation:
+    #uuid: 
+    #name: 
 
 description: |
-  Type Here
+  ...
 #detection_model: 
 
 response:
   alert_severity: 
   #playbook: https://
   #responders: 
+  #procedure:
+    #analysis: |
+      #...
+    #searches:
+      #- purpose: |
+          #...
+        #system: 
+        #query: |
+          #...
+    #containment: |
+      #...
 
 configurations: {}

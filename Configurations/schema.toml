@@ -1,0 +1,17 @@
+[templates]
+# Allows to insert templates by interacting with the JSON
+# schema and the template generation algorithm.
+# In metaschema, the special keyword tide.config.template is used
+# to point to the schema path. We prefer to use scoped, non nested
+# keys to avoid confusing the TOML parser with structures too complicated. 
+"mdr::description" = """
+"""
+
+"mdr::response::procedure::analysis" = """
+"""
+
+"mdr::response::procedure::containment" = """
+"""
+
+"mdr::exclusions::reason" = """
+"""

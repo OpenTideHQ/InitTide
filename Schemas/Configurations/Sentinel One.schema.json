@@ -1,0 +1,224 @@
+{
+  "title": "Sentinel One Configuration",
+  "description": "Validates and Documents the Sentinel One Configuration file",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "required": [
+    "platform",
+    "tenants"
+  ],
+  "properties": {
+    "platform": {
+      "title": "Platform Config Section",
+      "type": "object",
+      "required": [
+        "enabled",
+        "identifier",
+        "name",
+        "subschema",
+        "description",
+        "flags"
+      ],
+      "properties": {
+        "enabled": {
+          "title": "System enabled",
+          "description": "Controls whether the OpenTIDE instance considers the system\nas enabled, and updates its internal schemas and logic accordingly\n",
+          "type": "boolean",
+          "default": false
+        },
+        "identifier": {
+          "title": "System Identifier",
+          "description": "Unique string to identify the system at several part of the framework,\nespecially within the MDR configuration section. Cannot be overwritten,\nneed to be changed at a schema level first \n",
+          "type": "string",
+          "const": "sentinel_one"
+        },
+        "name": {
+          "title": "System Name",
+          "description": "The usual commercial or commonly known term for the system. Mostly\nused for documentation or enrichment purposes\n",
+          "type": "string",
+          "const": "Sentinel One"
+        },
+        "subschema": {
+          "title": "System Sub Schema",
+          "description": "Name of the file containing the schema definition for the system, without\npath or extension. Should not be usually modified. \n",
+          "type": "string",
+          "const": "Sentinel One"
+        },
+        "description": {
+          "title": "System Description",
+          "description": "Explanation of the system, for documentation purposes\n",
+          "type": "string"
+        },
+        "flags": {
+          "title": "System Flags",
+          "description": "Flags can be referenced within the MDR. They may be useful as simple\ninternal tagging system for documentation and management, but they may also\nbe used as part of the deployment modifiers framework.\n",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "modifiers": {
+      "title": "Deployment Modifiers",
+      "description": "Deployment-Time Modification is an advanced feature of OpenTide : it allows\ndefining a list of rules at instance level which are evaluated against conditions,\nand if there is a match, allows to mutate ANY aspect of the MDR Configuration section.\n\nThis is accomplished through a deep merge of the modifiers.modifications section with the related\nsystem configuration data.\n\nDeployment modifiers allows to effectively re-target deployment, and override any aspect of the MDR\ndepending on the desired business logic.\n",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "description",
+          "conditions",
+          "modifications"
+        ],
+        "properties": {
+          "name": {
+            "title": "Modifier Section Name",
+            "description": "A human readable name that is mostly used for logging and documentation purposes\n",
+            "type": "string"
+          },
+          "description": {
+            "title": "Modifier Section Description",
+            "description": "A human readable description that is mostly used for logging and documentation purposes\n",
+            "type": "string"
+          },
+          "conditions": {
+            "title": "Condition Expression",
+            "description": "Conditions are simple to express : within a condition field, such as flags, \na list of values is required. All values within that list are ORed. Between fields,\nvalues are ANDed.\n\n```yaml\nflags: [\"Flag 1\", \"Flag 2\"]\ntenant: [\"Tenant A\"]\n```\n\nThis expression would be evaluated as IF (mdr.flags == \"Flag 1\" OR mdr.flags == \"Flag 2\")\nAND (tenant == \"Tenant A\") \n",
+            "type": "object",
+            "additionalProperties": false,
+            "anyOf": [
+              {
+                "required": [
+                  "status"
+                ]
+              },
+              {
+                "required": [
+                  "flags"
+                ]
+              },
+              {
+                "required": [
+                  "tenants"
+                ]
+              }
+            ],
+            "properties": {
+              "status": {
+                "title": "MDR Status Condition",
+                "description": "Matches the current MDR status against a list of MDR Status names. This list is not\nvalidated, so ensure that you reference valid MDR Status names.\n",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "tenants": {
+                "title": "Current Tenant Deployment Condition",
+                "description": "In the deployment loop, the current targeted tenant will be\nevaluated against this rule. Tenants are targeted in the following order\n\n1. By the list of tenants defined under the tenants section in this configuration\n2. If it is overwritten by the tenants keyword within the MDR, takes precedence\n",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "flags": {
+                "title": "MDR Flags Conditions",
+                "description": "Matches the flags of the MDR, if it contains any. \n",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "modifications": {
+            "title": "Data Modifiers",
+            "description": "If the condition section matches, this section gets merged into the MDR configuration section.\nThere are some important details to keep in mind.\n\nYou CAN NOT overwrite tenants again. Modifiers are only evaluated AFTER the tenant list gets reconciliated\naccording to the deployment strategy defined in the respective tenant section. \n\nYou are expected to provide full paths to the value you wish to change. Note that in TOML, this is\naccomplished with dot separated paths. Thus, to target the title keyword within the alert object,\nthis would be expressed as `alert.title = \"NEW VALUE\"` and result in merging into the MDR body\n`{\"alert\": {title: \"NEW VALUE\"}}`. Incorrectly targeting the keyword will result in breaking the datamodel, \nand thus fail the pipeline after the modifier gets applied.\n\nThe algorithm perform a deep merging, which ensures that data is not overwritten. If you wish to\nremove entirely a field, you can set the new value to `\"NULL\"`. This will be processed internally\nas a None. \n\nBy using `prefix::NEW_VALUE` and `suffix::NEW_VALUE` you may also respectivaly prepend of append your\nnew value to the one used by the MDR. If there is no existing value, this will simply become the new value.\nThis is particularly useful to automate business logic, for example by changing the alert title \nbased on the status and/or flags. \n",
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "tenants": {
+      "title": "Tenant Configuration",
+      "description": "Each list item should be a particular tenant, with accompanying values. \nNote that when a string value is expected, you may use environment variables using the following\nexpression $ENVIRONMENT_VARIABLE. This is particularly useful for secrets, which you may keep \nas a CI variable.\n",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "description",
+          "deployment",
+          "setup"
+        ],
+        "properties": {
+          "name": {
+            "title": "Tenant Name",
+            "description": "Identifier for the tenant, which will be reused at several parts of the framework.\nAs this will be used as an identifier, use something explicit but concise. For\nexample, `DEV` or `PROD`\n\nTenants may also be different clients, and if you need further subdivision you may\nuse a special syntax : CLIENT::ENVIRONMENT. No other special characters allowed. \n",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9]*(:{2})?[a-zA-Z0-9_]*$"
+          },
+          "description": {
+            "title": "Tenant Description",
+            "description": "Explanation of what the tenant is, and if there's any specificities to be documented.\n",
+            "type": "string"
+          },
+          "deployment": {
+            "title": "Deployment Strategy",
+            "description": "The deployment strategy allows to automate and safeguard how a tenant should be considered\nby the deployment algorithms. \n\n- ALWAYS     : As part of every deployment, the tenant is considered as a target\n- MANUAL     : The tenant is NEVER considered as a target, except if it has been defined in the MDR content under tenants.\n- STAGING    : The tenant is ONLY targeted within a Staging context (e.g., during a merge request)\n- PRODUCTION : The tenant is ONLY targeted within a Staging context (e.g., post-merge, after any commit to the default (main/master) branch)\n",
+            "type": "string",
+            "enum": [
+              "ALWAYS",
+              "MANUAL",
+              "STAGING",
+              "PRODUCTION"
+            ]
+          },
+          "setup": {
+            "title": "Tenant Setup",
+            "description": "Technical data related to this specific tenant configuration.\n",
+            "type": "object",
+            "required": [
+              "proxy",
+              "ssl",
+              "account_id"
+            ],
+            "properties": {
+              "proxy": {
+                "title": "Enable Proxy",
+                "description": "If set to true, will retrieve proxy settings and use them ahead of making any\nAPI calls. This is useful if you are in an enterprise context, and need to pass\nthrough the corporate proxy to access external resources. The proxy settings are retrieved\nfrom deployment.toml, under the proxy section. If you do not see this configuration in your instance,\nrefer to CoreTIDE repositories to reproduce and override. \n",
+                "type": "boolean",
+                "default": false
+              },
+              "ssl": {
+                "title": "Enable SSL",
+                "description": "If set to true, performs the calls over HTTPS. You may need to configure this to false\nif you notice SSL or certificate errors during deployments, as some networking setup\nwill not work well for API calls over HTTPS, especially proxies, or the target platform.\n\nAnother root cause for certificate errors may be the trust store of the CI runner not\nrecognizing the CA root of the system, in which case you could look into manually importing a\nroot CA. Self-signed certificates will create similar issues, and you could look into importing\nthe CA chain of the system directly. Refer to your CI system documentation to understand how this is possible, for example in \nGitlab this is documented here: https://docs.gitlab.com/runner/configuration/tls-self-signed.html\n",
+                "type": "boolean",
+                "default": true
+              },
+              "url": {
+                "title": "Management URL",
+                "type": "string",
+                "description": "The root URL of the tenant, the same as the one you see on your browser when visiting\nthe console \n"
+              },
+              "account_id": {
+                "title": "Microsoft Entra ID Tenant ID",
+                "description": "Required, allows to scope the tenant to the entire account. You can find your account ID under\n\"Scopes\", in the Sentinel One console.\n",
+                "type": "integer"
+              },
+              "site_id": {
+                "title": "App Registration Client ID",
+                "type": "integer",
+                "description": "Optional, you may specify the scope of this tenant by adding a specific site. If not, deploys\nto the entire account. Sites are contained within Scopes (or Accounts), and you can find the ID\non the Sentinel One console\n"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

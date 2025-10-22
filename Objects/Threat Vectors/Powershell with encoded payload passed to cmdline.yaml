@@ -23,8 +23,8 @@ metadata:
 
 threat:
   actors:
-    - f7df0494-027a-4b6d-8981-b770ffd8a560 #Sofacy|FANCY BEAR/APT28/Pawn Storm/Sednit/Tsar t...
-    - 718030b0-1f8a-45fd-9288-ba39ce638dc7 #Emissary Panda|APT27/Earth Smilodon/LuckyMouse/B...
+    - name: misp::5b4ee3ea-eee3-4c8e-8323-85ae32658754 #APT28, Pawn Storm, FANCY BEAR, Sednit, SNAKEMACKEREL, Tsar Team, TG-4127, STRONTIUM, Swallowtail, IRON TWILIGHT, Group 74, SIG40, Grizzly Steppe, G0007, ATK5, Fighting Ursa, ITG05, Blue Athena, TA422, T-APT-12, APT-C-20, UAC-0028, FROZENLAKE, Sofacy, Forest Blizzard, BlueDelta, Fancy Bear, GruesomeLarch
+    - name: misp::834e0acd-d92a-4e38-bb14-dc4159d7cb32 #APT27, GreedyTaotie, TG-3390, EMISSARY PANDA, TEMP.Hippo, Red Phoenix, Budworm, Group 35, ZipToken, Iron Tiger, BRONZE UNION, Lucky Mouse, G0027, Iron Taurus, Earth Smilodon, Circle Typhoon, Linen Typhoon
   killchain: Defense Evasion
   att&ck:
     - T1027.010 # Obfuscated Files or Information: Command Obfuscation
