@@ -18,6 +18,7 @@
   "yaml.schemaStore.enable": false,
   "yaml.trace.server": "verbose",
   "evenBetterToml.schema.associations": {
+    ".*harfanglab.*": "file://./Schemas/Configurations/HarfangLab.schema.json",
     ".*defender_for_endpoint.*": "file://./Schemas/Configurations/Defender for Endpoint.schema.json",
     ".*sentinel_one.*": "file://./Schemas/Configurations/Sentinel One.schema.json",
     ".*crowdstrike.*": "file://./Schemas/Configurations/CrowdStrike.schema.json",
