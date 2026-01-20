@@ -23,32 +23,32 @@
         },
         {
             "techniqueID": "T1027.010",
-            "color": "#74c476",
-            "comment": "[CDM] Powershell encoded payload to start new process, [MDR] RBA_RR - WIN base64 encoded powershell payload",
+            "color": "#9e9ac8",
+            "comment": "[TVM] Powershell with encoded payload passed to cmdline, [CDM] Powershell encoded payload to start new process",
             "enabled": true
         },
         {
             "techniqueID": "T1059",
-            "color": "#74c476",
-            "comment": "[CDM] Powershell encoded payload to start new process, [MDR] RBA_RR - WIN base64 encoded powershell payload",
+            "color": "#9e9ac8",
+            "comment": "[TVM] Powershell with encoded payload passed to cmdline, [CDM] Powershell encoded payload to start new process",
             "enabled": true
         },
         {
             "techniqueID": "T1059.001",
-            "color": "#74c476",
-            "comment": "[CDM] Powershell encoded payload to start new process, [MDR] RBA_RR - WIN base64 encoded powershell payload",
+            "color": "#9e9ac8",
+            "comment": "[TVM] Powershell with encoded payload passed to cmdline, [CDM] Powershell encoded payload to start new process",
             "enabled": true
         },
         {
             "techniqueID": "T1140",
-            "color": "#74c476",
-            "comment": "[CDM] Powershell encoded payload to start new process, [MDR] RBA_RR - WIN base64 encoded powershell payload",
+            "color": "#9e9ac8",
+            "comment": "[TVM] Powershell with encoded payload passed to cmdline, [CDM] Powershell encoded payload to start new process",
             "enabled": true
         },
         {
             "techniqueID": "T1068",
-            "color": "#74c476",
-            "comment": "[CDM] Powershell encoded payload to start new process, [MDR] RBA_RR - WIN base64 encoded powershell payload",
+            "color": "#9e9ac8",
+            "comment": "[TVM] Powershell with encoded payload passed to cmdline, [CDM] Powershell encoded payload to start new process",
             "enabled": true
         }
     ],

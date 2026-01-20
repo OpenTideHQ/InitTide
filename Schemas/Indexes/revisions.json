@@ -50,18 +50,5 @@
                 "commit": "Sample Commit SHA"
             }
         }
-    },
-    "0be66eea-4ae4-4544-811b-52651e20d744": {
-        "name": "RBA_RR - WIN base64 encoded powershell payload",
-        "object": "Detection Rules",
-        "description": "Detect base64 encoded PowerShell payload that could be used to launch \na process or a script.\nThe detection applies up to 2 levels of encoded payload (a first payload \ncontaining a PowerShell command with a second base64 payload).  \n\n### Splunk(Sentinel) investigation guidelines ###\n\nThe alert notification contains\n- host(src_host): the host on which the process was launched.\n- src_user: the account used.\n- ParentProcessName(parent_process): the process launching the PS with base64 payload.\n- NewProcessName(process): PS.\n- CommandLine(command_line): the original command line as seen in logs.\n- payload_b64_ascii [and payload_b64]: the first level of encoded payload. \nThey are always present.\n- payload_level2_b64_ascii [and payload_level2_b64] may also be provided \nif the first level was containing another base64 encoded payload.\nFor Sentinel Alert, you have to decode the base64 string present in command_line field,\nusing CyberChef or any base64 decoding tool.  \n\n### SENTINEL alerts triage ###\nCATCH uses TIDE_LD_005_CSIRC_WL_Win_Base64_Encoded_PS_Payload.csv\nto filter legitimate or benign base64 encoded payloads used by PowerShell \non EC Windows devices running on our Azure IaaS & PaaS tenant.\n\n### ES-SPLUNK alerts triage ###\nCATCH uses SOC_LT_289_WIN_reviewed_base64_encoded_payload-exclude.csv\nto filter legitimate or benign base64 encoded payloads used by PowerShell \non EC Windows devices.\n",
-        "revisions": {
-            "6": {
-                "date": "2025-10-17",
-                "message": "Sample Commit Message",
-                "author": "Sample Commit Author",
-                "commit": "Sample Commit SHA"
-            }
-        }
     }
 }

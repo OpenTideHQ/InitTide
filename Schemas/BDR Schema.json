@@ -402,7 +402,11 @@
                             "Safety Instrumented System/Protection Relay",
                             "Function-as-a-Service",
                             "Business Communication Tools",
-                            "Windows API"
+                            "Windows API",
+                            "OT Network Segment",
+                            "Serial Communication Link",
+                            "OT Historian",
+                            "SCADA Master Station"
                         ],
                         "markdownEnumDescriptions": [
                             "\n### \ud83d\uddc3\ufe0f Critical Documents\n\n\ud83d\udd11 **Identifier** : `TGT0001`\n\n_Vocabulary_ : `Targets`\n\n \n\n\n\n\n\n---\n\nPlaceholder\n",
@@ -510,7 +514,11 @@
                             "\n### \ud83e\uddba Safety Instrumented System/Protection Relay\n\n\ud83d\udd11 **Identifier** : `TGT0106`\n\n_Vocabulary_ : `Targets`\n\n \n\n\n\nhttps://collaborate.mitre.org/attackics/index.php/Safety_Instrumented_System/Protection_Relay\n\n---\n\nA safety instrumented system (SIS) takes automated action to keep a plant in a safe state, or to put it into a safe state, when abnormal conditions are present. The SIS may implement a single function or multiple functions to protect against various process hazards in your plant.3 The function of protective relaying is to cause the prompt removal from service of an element of a power system when it suffers a short circuit or when it starts to operate in any abnormal manner that might cause damage or otherwise interfere with the effective operation of the rest of the system.\n",
                             "\n### \ud83e\udde9 Function-as-a-Service\n\n\ud83d\udd11 **Identifier** : `TGT0107`\n\n_Vocabulary_ : `Targets`\n\n \n\n\n\nhttps://www.ibm.com/cloud/learn/faas\n\n---\n\nFaaS (Function-as-a-Service) is a type of cloud-computing service that allows you to execute code in response to events without the complex infrastructure typically associated with building and launching microservices applications.\n",
                             "\n### \ud83d\udde3\ufe0f Business Communication Tools\n\n\ud83d\udd11 **Identifier** : `TGT0108`\n\n_Vocabulary_ : `Targets`\n\n \n\n\n\n\n\n---\n\nEnterprise communication consists of an organization's tools and practices to collaborate and share information internally and externally. Common examples include phone, email, instant messaging, and face-to-face video meetings.\n",
-                            "\n### \ud83e\udde9 Windows API\n\n\ud83d\udd11 **Identifier** : `TGT0109`\n\n_Vocabulary_ : `Targets`\n\n \n\n\n\nhttps://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list\n\n---\n\nThe Windows API, informally WinAPI, is Microsoft's core set of application programming interfaces (APIs) available in the Microsoft Windows operating systems. The name Windows API collectively refers to several different platform implementations that are often referred to by their own names (for example, Win32 API). Almost all Windows programs interact with the Windows API.\n"
+                            "\n### \ud83e\udde9 Windows API\n\n\ud83d\udd11 **Identifier** : `TGT0109`\n\n_Vocabulary_ : `Targets`\n\n \n\n\n\nhttps://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list\n\n---\n\nThe Windows API, informally WinAPI, is Microsoft's core set of application programming interfaces (APIs) available in the Microsoft Windows operating systems. The name Windows API collectively refers to several different platform implementations that are often referred to by their own names (for example, Win32 API). Almost all Windows programs interact with the Windows API.\n",
+                            "\n### \ud83c\udfed OT Network Segment\n\n\ud83d\udd11 **Identifier** : `TGT0110`\n\n_Vocabulary_ : `Targets`\n\n \n\n\n\n\n\n---\n\nDedicated network segment containing operational technology assets including PLCs, RTUs, HMIs, and SCADA servers, typically isolated from corporate IT networks.\n",
+                            "\n### \ud83d\udd0c Serial Communication Link\n\n\ud83d\udd11 **Identifier** : `TGT0111`\n\n_Vocabulary_ : `Targets`\n\n \n\n\n\n\n\n---\n\nRS-232/RS-485 serial connections used for point-to-point communication between OT devices, often using Modbus RTU or DNP3 protocols.\n",
+                            "\n### \ud83d\udcca OT Historian\n\n\ud83d\udd11 **Identifier** : `TGT0112`\n\n_Vocabulary_ : `Targets`\n\n \n\n\n\n\n\n---\n\nSpecialized time-series database for collecting and storing process data from industrial control systems, used for trending, analysis, and regulatory compliance.\n",
+                            "\n### \ud83d\udda5\ufe0f SCADA Master Station\n\n\ud83d\udd11 **Identifier** : `TGT0113`\n\n_Vocabulary_ : `Targets`\n\n \n\n\n\n\n\n---\n\nCentral system in SCADA architecture that collects data from and sends commands to RTUs and PLCs across geographically distributed sites.\n"
                         ]
                     },
                     "uniqueItems": true
@@ -591,7 +599,17 @@
                             "Microsoft Entra Privileged Identity Management",
                             "Azure WAF",
                             "Microsoft Purview",
-                            "Sysdiagnose"
+                            "Sysdiagnose",
+                            "Modbus TCP/RTU",
+                            "IEC 60870-5-104",
+                            "DNP3",
+                            "Siemens S7comm",
+                            "EtherNet/IP CIP",
+                            "OPC UA",
+                            "OPC DA",
+                            "BACnet",
+                            "PROFINET",
+                            "IEC 61850"
                         ],
                         "markdownEnumDescriptions": [
                             "\n### \ud83d\udcbf AWS\n\n\ud83d\udd11 **Identifier** : `PFM0001`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\n\n\n---\n\nPlaceholder\n",
@@ -663,7 +681,17 @@
                             "\n### \ud83d\udcbf Microsoft Entra Privileged Identity Management\n\n\ud83d\udd11 **Identifier** : `PFM0067`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\nhttps://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-configure\n\n---\n\nPrivileged Identity Management (PIM) is a service in Microsoft Entra ID that enables you to manage, control, and monitor access to important resources in your organization.\n",
                             "\n### \ud83d\udcbf Azure WAF\n\n\ud83d\udd11 **Identifier** : `PFM0068`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\nhttps://learn.microsoft.com/en-us/azure/web-application-firewall/ag/ag-overview\n\n---\n\nAzure Web Application Firewall provides centralized protection of your web applications from common exploits and vulnerabilities.\n",
                             "\n### \ud83d\udcbf Microsoft Purview\n\n\ud83d\udd11 **Identifier** : `PFM0069`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\nhttps://learn.microsoft.com/en-us/purview/purview\n\n---\n\nMicrosoft Purview is a comprehensive set of solutions that helps your organization govern, protect, and manage data wherever it lives. Microsoft Purview solutions provide integrated coverage and help address the fragmentation of data across organizations, the lack of visibility that hampers data protection and governance, and the blurring of traditional IT management roles.\n",
-                            "\n### \ud83d\udcbf Sysdiagnose\n\n\ud83d\udd11 **Identifier** : `PFM0070`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\nhttps://it-training.apple.com/tutorials/support/sup075/\n\n---\n\nYou can use sysdiagnose to research general iOS and iPadOS issues before you troubleshoot or report them to AppleCare. Sysdiagnose extracts information from iPhone and iPad devices and captures it in a log file. You or AppleCare can then read the file to understand software or network issues.\n"
+                            "\n### \ud83d\udcbf Sysdiagnose\n\n\ud83d\udd11 **Identifier** : `PFM0070`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\nhttps://it-training.apple.com/tutorials/support/sup075/\n\n---\n\nYou can use sysdiagnose to research general iOS and iPadOS issues before you troubleshoot or research them to AppleCare. Sysdiagnose extracts information from iPhone and iPad devices and captures it in a log file. You or AppleCare can then read the file to understand software or network issues.\n",
+                            "\n### \ud83d\udcbf Modbus TCP/RTU\n\n\ud83d\udd11 **Identifier** : `PFM0071`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\nhttps://modbus.org\n\n---\n\nModbus is a serial communication protocol used for connecting electronic devices in industrial environments. Modbus TCP operates over TCP/IP networks while Modbus RTU uses serial RS-232/RS-485 connections.\n",
+                            "\n### \ud83d\udcbf IEC 60870-5-104\n\n\ud83d\udd11 **Identifier** : `PFM0072`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\nhttps://webstore.iec.ch/publication/25035\n\n---\n\nIEC 60870-5-104 (IEC 104) is a telecontrol protocol for power system monitoring and control, commonly used in electric utility SCADA systems. It operates over TCP/IP networks.\n",
+                            "\n### \ud83d\udcbf DNP3\n\n\ud83d\udd11 **Identifier** : `PFM0073`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\nhttps://www.dnp.org/\n\n---\n\nDistributed Network Protocol 3 (DNP3) is a communication protocol used in SCADA systems, primarily for electric and water utilities. Supports both serial and TCP/IP transport.\n",
+                            "\n### \ud83d\udcbf Siemens S7comm\n\n\ud83d\udd11 **Identifier** : `PFM0074`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\nhttps://wiki.wireshark.org/S7comm\n\n---\n\nS7comm is the proprietary protocol used by Siemens S7-300/400 PLCs for communication between engineering software, HMIs, and controllers.\n",
+                            "\n### \ud83d\udcbf EtherNet/IP CIP\n\n\ud83d\udd11 **Identifier** : `PFM0075`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\nhttps://www.odva.org/technology-standards/key-technologies/ethernet-ip/\n\n---\n\nEtherNet/IP is an industrial network protocol using Common Industrial Protocol (CIP) over standard Ethernet. Used primarily with Allen-Bradley/Rockwell Automation controllers.\n",
+                            "\n### \ud83d\udcbf OPC UA\n\n\ud83d\udd11 **Identifier** : `PFM0076`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\nhttps://opcfoundation.org/about/opc-technologies/opc-ua/\n\n---\n\nOPC Unified Architecture (OPC UA) is a machine-to-machine communication protocol for industrial automation. Provides secure, reliable data exchange across platforms.\n",
+                            "\n### \ud83d\udcbf OPC DA\n\n\ud83d\udd11 **Identifier** : `PFM0077`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\nhttps://opcfoundation.org/about/opc-technologies/opc-classic/\n\n---\n\nOPC Data Access (OPC DA) is a legacy OPC specification for real-time data access from PLCs, DCS, and other control devices to HMIs and SCADA systems.\n",
+                            "\n### \ud83d\udcbf BACnet\n\n\ud83d\udd11 **Identifier** : `PFM0078`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\nhttps://www.bacnetinternational.org/\n\n---\n\nBuilding Automation and Control Networks (BACnet) is a communication protocol for building automation and control networks, used in HVAC, lighting, and access control systems.\n",
+                            "\n### \ud83d\udcbf PROFINET\n\n\ud83d\udd11 **Identifier** : `PFM0079`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\nhttps://www.profibus.com/technology/profinet\n\n---\n\nPROFINET is an industry standard for industrial Ethernet, primarily used with Siemens and other European automation equipment.\n",
+                            "\n### \ud83d\udcbf IEC 61850\n\n\ud83d\udd11 **Identifier** : `PFM0080`\n\n_Vocabulary_ : `Platforms`\n\n \n\n\n\nhttps://webstore.iec.ch/publication/6028\n\n---\n\nIEC 61850 is a standard for communication networks and systems in substations, enabling interoperability between intelligent electronic devices (IEDs) in power systems.\n"
                         ]
                     },
                     "uniqueItems": true
