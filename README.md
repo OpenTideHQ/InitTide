@@ -19,6 +19,10 @@ Configuration files, written in TOML, control many aspect of the system, from de
 #### Advanced Utilisation
 you may copy in your repo any of the config file described in [CoreTide/Configurations](https://github.com/OpenTideHQ/CoreTide/tree/development/Configurations), and override any setting - the pipelines will always perform at startup a reconciliation, where your instance config take precedence over the base configs provided by CoreTide.
 
+> [!IMPORTANT]
+> With the introduction of new **Detection Objectives** framework, Cyber Detection Models and Business Detection Models have effectively been **deprecated** 
+> You may still see configuration references or potential log messages pointing to BDR or CDM files, but references and remaining support are effectively going to be progressively removed from CoreTide codebase over time.
+> If you believe you encounter residual bugs, or conflicting behaviour because of those legacy models, please raise an issue.
 
 #### About Secrets
 > Only for specific sections of configuration files under Configurations/systems !
@@ -26,7 +30,7 @@ you may copy in your repo any of the config file described in [CoreTide/Configur
 For system deployment configurations, defining API Tokens and other secrets in a configuration file isn't safe. The framework supports a way to retrieve secrets from the environment variables, by prefixing the variable name with `$`. You then only need to create those variables on your CI/CD system (Gitlab CI Variable, Azure DevOps Variable Groups etc.).
 
 ##### WIP
-Splunk, Sentinel and Carbon Black Cloud will migrate to the MDRv4 deployment framework, and only the `[tenant.setup]` section will be relevant in the future. For now, refer to the configuration file for your chosen platform - it will contain all the required information to understand where secrets must be placed, and in which format.
+Splunk and Carbon Black Cloud will migrate to the MDRv4 deployment framework, and only the `[tenant.setup]` section will be relevant in the future. For now, refer to the configuration file for your chosen platform - it will contain all the required information to understand where secrets must be placed, and in which format.
 
 ##### Azure DevOps
 IMPORTANT - In Azure Pipelines, if you declare a CI Variable as a secret, it will prevent it from being directly read by the CoreTide scripts as environment variables . To work around this limitation, you can use `.azure/set_secrets.yml`, which will allow you to declare your variables again and broadcast them to the pipeline. The secrets will still not be printed to the console, even if they will exist in the environment variable context.
