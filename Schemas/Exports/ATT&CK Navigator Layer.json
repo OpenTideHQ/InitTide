@@ -2,56 +2,7 @@
     "versions": {
         "layer": "4.5"
     },
-    "techniques": [
-        {
-            "techniqueID": "T1078.004",
-            "color": "#fc6b6b",
-            "comment": "[TVM] Azure - Valid Credentials",
-            "enabled": true
-        },
-        {
-            "techniqueID": "T1110",
-            "color": "#fc6b6b",
-            "comment": "[TVM] Azure - Valid Credentials",
-            "enabled": true
-        },
-        {
-            "techniqueID": "T1555",
-            "color": "#fc6b6b",
-            "comment": "[TVM] Azure - Valid Credentials",
-            "enabled": true
-        },
-        {
-            "techniqueID": "T1027.010",
-            "color": "#9e9ac8",
-            "comment": "[TVM] Powershell with encoded payload passed to cmdline, [CDM] Powershell encoded payload to start new process",
-            "enabled": true
-        },
-        {
-            "techniqueID": "T1059",
-            "color": "#9e9ac8",
-            "comment": "[TVM] Powershell with encoded payload passed to cmdline, [CDM] Powershell encoded payload to start new process",
-            "enabled": true
-        },
-        {
-            "techniqueID": "T1059.001",
-            "color": "#9e9ac8",
-            "comment": "[TVM] Powershell with encoded payload passed to cmdline, [CDM] Powershell encoded payload to start new process",
-            "enabled": true
-        },
-        {
-            "techniqueID": "T1140",
-            "color": "#9e9ac8",
-            "comment": "[TVM] Powershell with encoded payload passed to cmdline, [CDM] Powershell encoded payload to start new process",
-            "enabled": true
-        },
-        {
-            "techniqueID": "T1068",
-            "color": "#9e9ac8",
-            "comment": "[TVM] Powershell with encoded payload passed to cmdline, [CDM] Powershell encoded payload to start new process",
-            "enabled": true
-        }
-    ],
+    "techniques": [],
     "name": "layer",
     "domain": "enterprise-attack",
     "hideDisabled": false,
