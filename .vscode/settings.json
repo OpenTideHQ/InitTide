@@ -12,6 +12,9 @@
     "Schemas/BDR Schema.json": [
       "**/Business*Detections/*.yaml"
     ],
+    "Schemas/Detection Objective.schema.json": [
+      "**/Detection*Objectives/*.yaml"
+    ],
   },
 
   "redhat.telemetry.enabled": false,
