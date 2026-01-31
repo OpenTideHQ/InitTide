@@ -485,7 +485,15 @@
                                     },
                                     "system": {
                                         "title": "Target system for the search",
-                                        "type": "string"
+                                        "type": "string",
+                                        "enum": [
+                                            "splunk",
+                                            "sentinel",
+                                            "crowdstrike",
+                                            "sentinel_one",
+                                            "defender_for_endpoint",
+                                            "carbon_black_cloud"
+                                        ]
                                     },
                                     "query": {
                                         "title": "\ud83d\udd0e Supporting Search Query",
