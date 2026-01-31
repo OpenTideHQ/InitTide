@@ -485,8 +485,7 @@
                                     },
                                     "system": {
                                         "title": "Target system for the search",
-                                        "type": "string",
-                                        "enum": []
+                                        "type": "string"
                                     },
                                     "query": {
                                         "title": "\ud83d\udd0e Supporting Search Query",
