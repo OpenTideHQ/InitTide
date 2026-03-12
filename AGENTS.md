@@ -22,7 +22,9 @@ OpenTide is a framework that enables the creation of YAML files called Objects, 
 - UUID generation via `motivesoft.vscode-uuid-generator`
 - TOML schema validation via `evenBetterToml`
 
-**There are no local build, test, or lint commands.** All validation and CI/CD pipelines are delegated to the CoreTide repository and executed remotely via GitHub Actions, Azure Pipelines, or GitLab CI. Local validation relies on VS Code schema mappings (see `.vscode/settings.json`).
+These extensions are recommended (see `.vscode/extensions.json`) and enable the local validation workflow described below.
+
+**There are no local build, test, or lint commands.** All CI/CD pipelines are delegated to the CoreTide repository and executed remotely via GitHub Actions, Azure Pipelines, or GitLab CI. For local validation, VS Code with the recommended extensions provides real-time schema checking. Without VS Code, validation occurs when changes are pushed and the CI/CD pipeline runs.
 
 ## Prime Directives
 
@@ -55,7 +57,7 @@ OpenTide is a framework that enables the creation of YAML files called Objects, 
 
 ## OpenTide Framework Concepts
 
-OpenTide structures the Detection Engineering lifecycle as as-code (YAML) objects managed in a git repository. The core object types are:
+OpenTide structures the Detection Engineering lifecycle as as-code (YAML) objects managed in a git repository. The core object types are listed below. Each object's `metadata.schema` field uses the format `type::version` (e.g. `tvm::2.1`) to declare which schema validates it.
 
 ### 1. Threat Vectors (TVM)
 - **Purpose**: Represent atomically defined TTPs (Tactics, Techniques, Procedures) at a low level
@@ -168,11 +170,10 @@ OpenTide structures the Detection Engineering lifecycle as as-code (YAML) object
    - Place files in the correct folders per project structure
 
 7. **Validate**
-   - If using VS Code, open the file — the YAML extension auto-validates against the mapped JSON schema (see `.vscode/settings.json` for mappings)
+   - In VS Code, the YAML extension auto-validates against the mapped JSON schema in real time (see `.vscode/settings.json` for mappings). Without VS Code, validation runs when changes are pushed to CI/CD via CoreTide.
    - Verify all required fields are populated
    - Confirm UUIDs are unique across the repository
    - Review relationships between objects (cross-reference UUIDs)
-   - There are no local CLI validation commands; full validation runs in CI/CD via CoreTide
 
 8. **Present and Confirm**
    - Show a report of the generated content to the user
